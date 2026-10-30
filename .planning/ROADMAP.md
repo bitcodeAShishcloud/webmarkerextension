@@ -46,7 +46,10 @@ Plans:
   4. Overrides survive `withBaseUrl` and `saveTest` merges (regression tested)
   5. Local custom endpoints (localhost) get `maxConcurrent: 1` via `isCloudEndpoint(kind, baseUrl)`
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 02-01-PLAN.md — Profile wiring: clamp context window, honor output cap, local concurrency, override-survival regression tests
 
 ### Phase 3: Test Probe Robustness
 
