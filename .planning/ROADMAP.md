@@ -7,7 +7,7 @@ Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary en
 ## Phases
 
 - [x] **Phase 1: Settings UI & Validation** - Per-model limits, vision override, provider toggle, base-URL normalization, detected-vs-set display, i18n (completed 2026-10-30)
-- [ ] **Phase 2: Profile Wiring & Validation** - Overrides feed resolveProfile with safe clamping, local concurrency limits
+- [x] **Phase 2: Profile Wiring & Validation** - Overrides feed resolveProfile with safe clamping, local concurrency limits (completed 2026-10-31)
 - [ ] **Phase 3: Test Probe Robustness** - Tool-calling and vision probes with false-positive/negative mitigations
 - [ ] **Phase 4: Agent Integration** - Screenshot gating, usage-null degradation, CORS docs, end-to-end run
 
@@ -46,10 +46,10 @@ Plans:
   4. Overrides survive `withBaseUrl` and `saveTest` merges (regression tested)
   5. Local custom endpoints (localhost) get `maxConcurrent: 1` via `isCloudEndpoint(kind, baseUrl)`
 
-**Plans**: 1 plan
+**Plans**: 1/1 plans complete
 
 Plans:
-- [ ] 02-01-PLAN.md — Profile wiring: clamp context window, honor output cap, local concurrency, override-survival regression tests
+- [x] 02-01-PLAN.md — Profile wiring: clamp context window, honor output cap, local concurrency, override-survival regression tests
 
 ### Phase 3: Test Probe Robustness
 
@@ -62,7 +62,10 @@ Plans:
   3. Tool probe uses `Math.max(1024, userMaxOutput)` capped at 4096 and retries once at 4096 on `CUT_SHORT` before marking `noToolCalling`
   4. Probe failures surface the server's exact 400 body; streaming/usage is treated as optional (estimate when null)
 
-**Plans**: TBD
+**Plans**: 1/1 plans complete
+
+Plans:
+- [x] 03-01-PLAN.md — Tool probe cap sizing with 4096 retry, red-gated vision probe, exact 400 surfacing
 
 ### Phase 4: Agent Integration
 
@@ -82,6 +85,6 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Settings UI & Validation | 2/2 | Complete    | 2026-10-30 |
-| 2. Profile Wiring & Validation | 0/TBD | Not started | - |
+| 2. Profile Wiring & Validation | 1/1 | Complete    | 2026-10-31 |
 | 3. Test Probe Robustness | 0/TBD | Not started | - |
 | 4. Agent Integration | 0/TBD | Not started | - |

@@ -135,8 +135,11 @@ describe('the probes', () => {
     const refusing = probe(b => (hasImage(b) ? refuse('This model does not support image input') : plain()));
     expect((await testConnection(spec, { fetch: refusing.fetch }, { image: true })).tested).toEqual({ vision: false });
     expect(refusing.bodies.some(hasImage)).toBe(true);
-    const taking = probe(() => plain());
+    const taking = probe(() => sse([chunk({ role: 'assistant', content: 'red' }), chunk({}, 'stop')]));
     expect((await testConnection(spec, { fetch: taking.fetch }, { image: true })).tested).toEqual({ vision: true });
+    // A 200 whose answer does not mention red is not vision-capable.
+    const nonRed = probe(() => sse([chunk({ role: 'assistant', content: 'ok' }), chunk({}, 'stop')]));
+    expect((await testConnection(spec, { fetch: nonRed.fetch }, { image: true })).tested).toEqual({ vision: false });
   });
 
   it('runs no effort probe on a first-party kind', async () => {

@@ -31,14 +31,14 @@ export async function testModel(
   apiKey: string,
   whole: boolean,
 ): Promise<ModelTest> {
-  const spec = { kind: provider.kind, modelName, apiKey, baseUrl: provider.baseUrl };
+  const stored = provider.models.find(m => m.name === modelName);
+  const spec = { kind: provider.kind, modelName, apiKey, baseUrl: provider.baseUrl, maxOutputTokens: stored?.overrides?.maxOutput };
   const at = new Date().toISOString();
   const api = await readModelInfo(spec);
   const patch: ModelTest['patch'] = { fromApi: api ? { ...api, at } : undefined };
   if (provider.kind === 'ollama' || provider.kind === 'lmstudio') patch.detectedContext = await detectContext(spec);
   if (!whole) return { patch };
   // The probes ask only what no source said: the stored overrides and answers, and what the API said just now.
-  const stored = provider.models.find(m => m.name === modelName);
   const ask = probeAsk({ ...spec, overrides: stored?.overrides, tested: stored?.tested, fromApi: patch.fromApi });
   const result = await testConnection(spec, {}, ask);
   if (result.ok) {

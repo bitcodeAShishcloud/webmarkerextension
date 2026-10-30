@@ -63,17 +63,23 @@ export async function testConnection(
   options: CreateModelOptions = {},
   ask: ProbeAsk = {},
 ): Promise<ConnectionResult> {
-  const probe: TurnRequest = {
+  const userMaxOutput = typeof spec.maxOutputTokens === 'number' ? spec.maxOutputTokens : 0;
+  let cap = Math.min(4096, Math.max(1024, userMaxOutput));
+
+  const makeProbe = (maxTokens: number): TurnRequest => ({
     // Room for a model that reasons by default to think before it calls the tool.
-    chat: createModel({ ...spec, maxOutputTokens: 1024 }, options),
+    chat: createModel({ ...spec, maxOutputTokens: maxTokens }, options),
     system: 'You are testing a tool connection. Call the tool report_status with status "ok". Do not write text.',
     messages: [{ role: 'user', content: 'Call report_status now.' }],
     tools: PROBE_TOOL,
     retry: { attempts: 1, baseMs: 0, maxMs: 0 },
-  };
-  const result = await streamTurn(probe);
+  });
+
+  const local = spec.kind === 'ollama' || spec.kind === 'lmstudio' || spec.kind === 'openai-compatible';
+
+  let probe = makeProbe(cap);
+  let result = await streamTurn(probe);
   if (result.error) {
-    const local = spec.kind === 'ollama' || spec.kind === 'lmstudio' || spec.kind === 'openai-compatible';
     return {
       ok: false,
       toolCalling: false,
@@ -82,11 +88,31 @@ export async function testConnection(
       ms: result.durationMs,
     };
   }
-  const toolCalling = result.toolCalls.some(c => c.toolName === 'report_status' && !c.invalid);
+  let toolCalling = result.toolCalls.some(c => c.toolName === 'report_status' && !c.invalid);
   // A reply cut short before any tool call says nothing about tool calling: the model may have spent its output on
-  // reasoning. Reported as a failed test, so nothing is stored and a model that worked keeps working.
+  // reasoning. Retry once at the full cap before giving up.
   if (!toolCalling && result.finish === 'length') {
-    return { ok: false, toolCalling: false, error: CUT_SHORT, ms: result.durationMs };
+    if (cap < 4096) {
+      const retryResult = await streamTurn(makeProbe(4096));
+      if (retryResult.error) {
+        return {
+          ok: false,
+          toolCalling: false,
+          error: retryResult.error.message,
+          originRefused: local && (retryResult.error.status === 403 || retryResult.error.status === undefined),
+          ms: retryResult.durationMs,
+        };
+      }
+      toolCalling = retryResult.toolCalls.some(c => c.toolName === 'report_status' && !c.invalid);
+      if (!toolCalling && retryResult.finish === 'length') {
+        return { ok: false, toolCalling: false, error: CUT_SHORT, ms: retryResult.durationMs };
+      }
+      cap = 4096;
+      result = retryResult;
+      probe = makeProbe(4096);
+    } else {
+      return { ok: false, toolCalling: false, error: CUT_SHORT, ms: result.durationMs };
+    }
   }
   const tested: Omit<LearntFacts, 'at'> = {};
   const once = (request: Partial<TurnRequest>) => streamTurn({ ...probe, ...request, fallback: false });
@@ -129,7 +155,7 @@ export async function testConnection(
       ],
     });
     if (r.error && refusesImages(r.error.status, r.error.message)) tested.vision = false;
-    else if (!r.error) tested.vision = true;
+    else if (!r.error) tested.vision = /red/i.test(r.text ?? '');
   }
 
   return { ok: true, toolCalling, ms: result.durationMs, ...(Object.keys(tested).length ? { tested } : {}) };
