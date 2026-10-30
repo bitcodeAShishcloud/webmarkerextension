@@ -6,7 +6,7 @@ Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary en
 
 ## Phases
 
-- [ ] **Phase 1: Settings UI & Validation** - Per-model limits, vision override, provider toggle, base-URL normalization, detected-vs-set display, i18n
+- [x] **Phase 1: Settings UI & Validation** - Per-model limits, vision override, provider toggle, base-URL normalization, detected-vs-set display, i18n (completed 2026-10-30)
 - [ ] **Phase 2: Profile Wiring & Validation** - Overrides feed resolveProfile with safe clamping, local concurrency limits
 - [ ] **Phase 3: Test Probe Robustness** - Tool-calling and vision probes with false-positive/negative mitigations
 - [ ] **Phase 4: Agent Integration** - Screenshot gating, usage-null degradation, CORS docs, end-to-end run
@@ -14,6 +14,7 @@ Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary en
 ## Phase Details
 
 ### Phase 1: Settings UI & Validation
+
 **Goal**: Users can enter and manage per-model limits, vision, and provider settings with validation
 **Depends on**: Nothing (first phase)
 **Requirements**: CMOD-01, CMOD-02, CMOD-03, CMOD-05, CMOD-06, CMOD-07, CMOD-08, CMOD-09
@@ -24,15 +25,17 @@ Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary en
   4. Settings shows detected vs. user-set values for context window, max output, and vision
   5. User can enable/disable a provider without deleting it
   6. Base URL is normalized (trailing slash trimmed) and validated for scheme/host
-**Plans**: 2 plans
+
+**Plans**: 2/2 plans complete
 
 Plans:
-- [ ] 01-01-PLAN.md — Provider enable/disable toggle, per-model expandable limits/vision panel, detected-vs-set display
-- [ ] 01-02-PLAN.md — Base URL normalization/validation on blur, model list search/filter, helper unit tests
+- [x] 01-01-PLAN.md — Provider enable/disable toggle, per-model expandable limits/vision panel, detected-vs-set display
+- [x] 01-02-PLAN.md — Base URL normalization/validation on blur, model list search/filter, helper unit tests
 
 **UI hint**: yes
 
 ### Phase 2: Profile Wiring & Validation
+
 **Goal**: Per-model limits and vision feed resolveProfile safely, and local endpoints are concurrency-limited
 **Depends on**: Phase 1
 **Requirements**: CMOD-04
@@ -42,9 +45,11 @@ Plans:
   3. `requestOutputLimit` honors the user's cap (floor `Math.min(profile.maxOutput, 1024)`)
   4. Overrides survive `withBaseUrl` and `saveTest` merges (regression tested)
   5. Local custom endpoints (localhost) get `maxConcurrent: 1` via `isCloudEndpoint(kind, baseUrl)`
+
 **Plans**: TBD
 
 ### Phase 3: Test Probe Robustness
+
 **Goal**: Tool-calling and vision detection are accurate and don't misclassify models
 **Depends on**: Phase 2
 **Requirements**: CMOD-10, CMOD-11
@@ -53,9 +58,11 @@ Plans:
   2. Vision probe requires the answer to contain "red"; a non-matching 200 yields `vision = false`/unknown, with manual override authoritative
   3. Tool probe uses `Math.max(1024, userMaxOutput)` capped at 4096 and retries once at 4096 on `CUT_SHORT` before marking `noToolCalling`
   4. Probe failures surface the server's exact 400 body; streaming/usage is treated as optional (estimate when null)
+
 **Plans**: TBD
 
 ### Phase 4: Agent Integration
+
 **Goal**: A custom tool-calling model runs the agent with correct vision gating and usage handling
 **Depends on**: Phase 3
 **Requirements**: CMOD-12
@@ -64,13 +71,14 @@ Plans:
   2. Screenshot tool is registered only when `profile.vision === true` (verified by a test flipping `overrides.vision`)
   3. Context management degrades gracefully when usage comes back null (estimation)
   4. CORS-blocked endpoints surface a distinct status-0 error and document origin allowance
+
 **Plans**: TBD
 
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Settings UI & Validation | 0/TBD | Not started | - |
+| 1. Settings UI & Validation | 2/2 | Complete    | 2026-10-30 |
 | 2. Profile Wiring & Validation | 0/TBD | Not started | - |
 | 3. Test Probe Robustness | 0/TBD | Not started | - |
 | 4. Agent Integration | 0/TBD | Not started | - |
