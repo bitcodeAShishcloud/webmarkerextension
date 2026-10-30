@@ -24,7 +24,12 @@ Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary en
   4. Settings shows detected vs. user-set values for context window, max output, and vision
   5. User can enable/disable a provider without deleting it
   6. Base URL is normalized (trailing slash trimmed) and validated for scheme/host
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Provider enable/disable toggle, per-model expandable limits/vision panel, detected-vs-set display
+- [ ] 01-02-PLAN.md — Base URL normalization/validation on blur, model list search/filter, helper unit tests
+
 **UI hint**: yes
 
 ### Phase 2: Profile Wiring & Validation
