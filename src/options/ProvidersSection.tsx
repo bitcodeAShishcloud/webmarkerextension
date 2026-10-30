@@ -551,9 +551,11 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
               }}
             />
             <datalist id={`models-${provider.id}`}>
-              {(showAll ? [...listed.models, ...listed.hidden] : listed.models).map(n => (
-                <option key={n} value={n} />
-              ))}
+              {(showAll || !!newModel.trim() ? [...listed.models, ...listed.hidden] : listed.models)
+                .filter(n => !newModel.trim() || n.toLowerCase().includes(newModel.trim().toLowerCase()))
+                .map(n => (
+                  <option key={n} value={n} />
+                ))}
             </datalist>
             <Button onClick={() => void addModel(newModel)}>{t('common.add')}</Button>
             <Button variant="ghost" onClick={() => void fetchModels()}>
