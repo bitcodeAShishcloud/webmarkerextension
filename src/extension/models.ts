@@ -1,6 +1,6 @@
 // Resolves a conversation's live model and effort to a callable model and its profile, from the stored providers and
 // keys. The key leaves storage only to build the provider client.
-import { createModel, detectContext, makePair, resolveProfile } from '@src/llm';
+import { createModel, detectContext, isCloudEndpoint, makePair, resolveProfile } from '@src/llm';
 import {
   capabilityOf,
   findModel,
@@ -8,7 +8,6 @@ import {
   keysStorage,
   learnFacts,
   learnt,
-  LOCAL_KINDS,
   providersStorage,
   settingsStorage,
   usableModel,
@@ -81,8 +80,9 @@ export async function resolveModel(pair: LivePair | null): Promise<ResolvedModel
     apiKey: keys[found.provider.id],
     baseUrl: found.provider.baseUrl,
     maxOutputTokens: profile.maxOutput,
-    // Ollama and LM Studio take one request at a time by default; more wait in the extension, not on the server.
-    ...(LOCAL_KINDS.has(found.provider.kind) ? { maxConcurrent: 1 } : {}),
+    // Local endpoints (Ollama, LM Studio, and openai-compatible at localhost/127.0.0.1/[::1]/private hosts) take one
+    // request at a time by default; more wait in the extension, not on the server.
+    ...(!isCloudEndpoint(found.provider.kind, found.provider.baseUrl) ? { maxConcurrent: 1 } : {}),
   });
   const learn = (facts: Parameters<NonNullable<ResolvedModel['learn']>>[0]) =>
     void learnFacts(found.provider.id, found.provider.baseUrl, found.model.name, facts);
