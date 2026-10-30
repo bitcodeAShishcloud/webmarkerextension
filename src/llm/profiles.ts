@@ -90,7 +90,14 @@ export function resolveProfile(input: ProfileInput): ModelProfile {
   const base = row ?? (cloud ? defaults.cloud : defaults.local);
   const { tested, fromApi, overrides } = input;
   const profile: ModelProfile = {
-    contextWindow: overrides?.contextWindow || tested?.contextWindow || fromApi?.contextWindow || base.contextWindow,
+    contextWindow: (() => {
+      // D-01: a user-entered context window must not exceed the server-reported value.
+      const override = overrides?.contextWindow;
+      const learnt = tested?.contextWindow || fromApi?.contextWindow;
+      const baseValue = base.contextWindow;
+      if (override && learnt) return Math.min(override, learnt);
+      return override || tested?.contextWindow || fromApi?.contextWindow || baseValue;
+    })(),
     maxOutput: overrides?.maxOutput || tested?.maxOutput || fromApi?.maxOutput || base.maxOutput,
     vision: overrides?.vision ?? tested?.vision ?? fromApi?.vision ?? base.vision,
   };
@@ -128,7 +135,10 @@ export function probeAsk(input: ProfileInput): {
 
 /** The output limit sent with each request: the profile's, capped so a reply cannot take most of a small window. */
 export function requestOutputLimit(profile: ModelProfile): number {
-  return Math.max(1024, Math.min(profile.maxOutput, 16_384, Math.floor(profile.contextWindow / 4)));
+  // D-02: honor the user's cap; the 1024 floor never exceeds profile.maxOutput.
+  const capped = Math.min(profile.maxOutput, 16_384, Math.floor(profile.contextWindow / 4));
+  const floor = Math.min(profile.maxOutput, 1024);
+  return Math.max(floor, capped);
 }
 
 /** What the SDK's `reasoning` option gets for an effort on this model, or undefined for nothing. */
