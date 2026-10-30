@@ -18,7 +18,7 @@
 - [x] **CMOD-09**: Model list supports search/filter for large catalogues
 - [x] **CMOD-10**: Test models probes tool calling and marks models that cannot tool-call; such models cannot be selected as default
 - [x] **CMOD-11**: Vision capability is auto-detected and gates the screenshot tool
-- [ ] **CMOD-12**: A custom model with tool calling can be selected as the default model and used to run the agent
+- [x] **CMOD-12**: A custom model with tool calling can be selected as the default model and used to run the agent
 
 ## v2 Requirements
 
@@ -57,7 +57,7 @@
 | CMOD-04 | Phase 2 | Complete |
 | CMOD-10 | Phase 3 | Complete |
 | CMOD-11 | Phase 3 | Complete |
-| CMOD-12 | Phase 4 | Pending |
+| CMOD-12 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 12 total

@@ -9,7 +9,7 @@ Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary en
 - [x] **Phase 1: Settings UI & Validation** - Per-model limits, vision override, provider toggle, base-URL normalization, detected-vs-set display, i18n (completed 2026-10-30)
 - [x] **Phase 2: Profile Wiring & Validation** - Overrides feed resolveProfile with safe clamping, local concurrency limits (completed 2026-10-31)
 - [x] **Phase 3: Test Probe Robustness** - Tool-calling and vision probes with false-positive/negative mitigations (completed 2026-10-31)
-- [ ] **Phase 4: Agent Integration** - Screenshot gating, usage-null degradation, CORS docs, end-to-end run
+- [x] **Phase 4: Agent Integration** - Screenshot gating, usage-null degradation, CORS docs, end-to-end run (completed 2026-10-31)
 
 ## Phase Details
 
@@ -78,11 +78,11 @@ Plans:
   3. Context management degrades gracefully when usage comes back null (estimation)
   4. CORS-blocked endpoints surface a distinct status-0 error and document origin allowance
 
-**Plans**: 2 plans
+**Plans**: 2/2 plans complete
 
 Plans:
-- [ ] 04-01-PLAN.md — Robustness edits: strict screenshot gating, null-usage guard, CORS notice
-- [ ] 04-02-PLAN.md — Verification tests
+- [x] 04-01-PLAN.md - Robustness edits: strict screenshot gating, null-usage guard, CORS notice
+- [x] 04-02-PLAN.md - Verification tests
 
 ## Progress
 
@@ -91,4 +91,4 @@ Plans:
 | 1. Settings UI & Validation | 2/2 | Complete    | 2026-10-30 |
 | 2. Profile Wiring & Validation | 1/1 | Complete    | 2026-10-31 |
 | 3. Test Probe Robustness | 1/1 | Complete    | 2026-10-31 |
-| 4. Agent Integration | 0/2 | Not started | - |
+| 4. Agent Integration | 2/2 | Complete    | 2026-10-31 |
