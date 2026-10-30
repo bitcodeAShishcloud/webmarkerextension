@@ -817,7 +817,7 @@ function ModelChip({
       setError(false);
       return;
     }
-    if (!/^\\d+$/.test(trimmed) || parseInt(trimmed, 10) <= 0) {
+    if (!/^\d+$/.test(trimmed) || parseInt(trimmed, 10) <= 0) {
       setError(true);
       return;
     }
