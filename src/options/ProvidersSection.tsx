@@ -15,7 +15,7 @@ import {
   settingsStorage,
   withBaseUrl,
 } from '@src/store/settings';
-import type { ModelEntry, ProviderConfig } from '@src/store/settings';
+import type { ModelEntry, ProfileOverrides, ProviderConfig } from '@src/store/settings';
 import { newId } from '@src/store/conversations';
 import { Button, Input, Notice, Select, Switch } from '@src/ui/components';
 import { SettingsCard } from './SettingsCard';
@@ -307,6 +307,18 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
   const keys = useStorage(keysStorage, EMPTY_KEYS);
   const info = kindInfo(provider.kind);
   const local = LOCAL_KINDS.has(provider.kind) || provider.kind === 'openai-compatible';
+  const updateModel = (name: string, overrides: ProfileOverrides | undefined) => {
+    void updateProvider(provider.id, {
+      models: provider.models.map(x => {
+        if (x.name !== name) return x;
+        if (overrides === undefined) {
+          const { overrides: _removed, ...rest } = x;
+          return rest;
+        }
+        return { ...x, overrides };
+      }),
+    });
+  };
   const [newModel, setNewModel] = useState('');
   const [listed, setListed] = useState<ModelList>({ models: [], hidden: [] });
   const [showAll, setShowAll] = useState(false);
@@ -502,9 +514,11 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
                   model={m}
                   result={results[m.name]}
                   testing={testingModels.has(m.name)}
+                  local={local}
                   onRemove={() =>
                     void updateProvider(provider.id, { models: provider.models.filter(x => x.name !== m.name) })
                   }
+                  onUpdateOverrides={overrides => updateModel(m.name, overrides)}
                 />
               ))}
             </ul>
@@ -746,20 +760,67 @@ export function KeyInput({
   );
 }
 
-/** A model as a chip: a check once it passed the test, "no tool calling" when it failed it, and remove on hover. */
+/** A model as a chip: a check once it passed the test, "no tool calling" when it failed it, and remove on hover. Expands to edit limits and vision. */
 function ModelChip({
   model,
   result,
   testing,
   onRemove,
+  onUpdateOverrides,
+  local,
 }: {
   model: ModelEntry;
   result?: ConnectionResult;
   /** A test of this model is running or waiting its turn. */
   testing: boolean;
   onRemove: () => void;
+  onUpdateOverrides: (overrides: ProfileOverrides | undefined) => void;
+  local: boolean;
 }) {
   const passed = result?.ok && result.toolCalling;
+  const [expanded, setExpanded] = useState(false);
+  const [cwDraft, setCwDraft] = useState<string>(model.overrides?.contextWindow?.toString() ?? '');
+  const [moDraft, setMoDraft] = useState<string>(model.overrides?.maxOutput?.toString() ?? '');
+  const [cwError, setCwError] = useState(false);
+  const [moError, setMoError] = useState(false);
+
+  // Keep drafts in sync when the model's overrides change from outside.
+  useEffect(() => {
+    setCwDraft(model.overrides?.contextWindow?.toString() ?? '');
+    setMoDraft(model.overrides?.maxOutput?.toString() ?? '');
+  }, [model.overrides?.contextWindow, model.overrides?.maxOutput]);
+
+  const commitLimit = (key: 'contextWindow' | 'maxOutput', draft: string, setError: (v: boolean) => void) => {
+    const trimmed = draft.trim();
+    const overrides: ProfileOverrides = { ...(model.overrides ?? {}) };
+    if (trimmed === '') {
+      delete overrides[key];
+      const has = Object.keys(overrides).length > 0;
+      onUpdateOverrides(has ? overrides : undefined);
+      setError(false);
+      return;
+    }
+    if (!/^\\d+$/.test(trimmed) || parseInt(trimmed, 10) <= 0) {
+      setError(true);
+      return;
+    }
+    overrides[key] = parseInt(trimmed, 10);
+    const has = Object.keys(overrides).length > 0;
+    onUpdateOverrides(has ? overrides : undefined);
+    setError(false);
+  };
+
+  const setVision = (value: 'auto' | 'on' | 'off') => {
+    const overrides: ProfileOverrides = { ...(model.overrides ?? {}) };
+    if (value === 'auto') delete overrides.vision;
+    else overrides.vision = value === 'on';
+    const has = Object.keys(overrides).length > 0;
+    onUpdateOverrides(has ? overrides : undefined);
+  };
+
+  const visionState: 'auto' | 'on' | 'off' =
+    model.overrides?.vision === undefined ? 'auto' : model.overrides.vision ? 'on' : 'off';
+
   return (
     <li
       title={
@@ -768,21 +829,82 @@ function ModelChip({
             `${t('models.testOk', { ms: result.ms })}${result.tested?.reasons !== undefined ? ` · ${t(result.tested.reasons ? 'models.reasons' : 'models.noReasoning')}` : ''}`
           : undefined
       }
-      className={`group flex items-center gap-1.5 rounded-lg border py-1 pl-2.5 pr-1 ${model.noToolCalling ? 'border-red-300 dark:border-red-800' : 'border-nb-border'} bg-nb-surface`}>
-      {passed ? <CheckIcon size={14} className="text-emerald-600 dark:text-emerald-400" /> : null}
-      <span className="font-mono">{model.name}</span>
-      {testing ? <span className="text-nb-muted">· {t('models.testing')}</span> : null}
-      {!testing && model.noToolCalling ? (
-        <span className="text-red-700 dark:text-red-300">· {t('models.noToolCalling')}</span>
+      className={`group flex flex-col gap-1.5 rounded-lg border py-1 pl-2.5 pr-1 ${model.noToolCalling ? 'border-red-300 dark:border-red-800' : 'border-nb-border'} bg-nb-surface`}>
+      <div className="flex items-center gap-1.5">
+        {passed ? <CheckIcon size={14} className="text-emerald-600 dark:text-emerald-400" /> : null}
+        <span className="font-mono">{model.name}</span>
+        {testing ? <span className="text-nb-muted">· {t('models.testing')}</span> : null}
+        {!testing && model.noToolCalling ? (
+          <span className="text-red-700 dark:text-red-300">· {t('models.noToolCalling')}</span>
+        ) : null}
+        <button
+          type="button"
+          className="ml-auto rounded px-1.5 py-0.5 text-xs text-nb-muted hover:bg-nb-bg hover:text-nb-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-nb-accent"
+          onClick={() => setExpanded(e => !e)}
+          aria-expanded={expanded}>
+          {t('models.details')}
+        </button>
+        <button
+          type="button"
+          aria-label={t('models.removeModel', { name: model.name })}
+          title={t('models.removeModel', { name: model.name })}
+          className="rounded p-0.5 text-nb-muted opacity-0 hover:bg-nb-bg hover:text-nb-fg focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-nb-accent group-hover:opacity-100"
+          onClick={onRemove}>
+          <CloseIcon size={14} />
+        </button>
+      </div>
+      {expanded ? (
+        <div className="flex flex-col gap-2 border-t border-nb-border pt-2 text-sm">
+          <label className="flex items-center gap-2">
+            <span className="w-32 text-nb-muted">{t('models.contextWindow')}</span>
+            <Input
+              aria-label={t('models.contextWindow')}
+              className="w-28"
+              value={cwDraft}
+              onChange={e => {
+                setCwDraft(e.target.value);
+                setCwError(false);
+              }}
+              onBlur={() => commitLimit('contextWindow', cwDraft, setCwError)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') commitLimit('contextWindow', cwDraft, setCwError);
+              }}
+            />
+            {cwError ? <span className="text-red-700 dark:text-red-300">{t('models.invalidNumber')}</span> : null}
+          </label>
+          <label className="flex items-center gap-2">
+            <span className="w-32 text-nb-muted">{t('models.maxTokens')}</span>
+            <Input
+              aria-label={t('models.maxTokens')}
+              className="w-28"
+              value={moDraft}
+              onChange={e => {
+                setMoDraft(e.target.value);
+                setMoError(false);
+              }}
+              onBlur={() => commitLimit('maxOutput', moDraft, setMoError)}
+              onKeyDown={e => {
+                if (e.key === 'Enter') commitLimit('maxOutput', moDraft, setMoError);
+              }}
+            />
+            {moError ? <span className="text-red-700 dark:text-red-300">{t('models.invalidNumber')}</span> : null}
+          </label>
+          <div className="flex items-center gap-2">
+            <span className="w-32 text-nb-muted">{t('models.vision')}</span>
+            <div className="flex gap-1">
+              {(['auto', 'on', 'off'] as const).map(v => (
+                <Button
+                  key={v}
+                  variant={visionState === v ? 'primary' : 'secondary'}
+                  className="px-2 py-0.5 text-xs"
+                  onClick={() => setVision(v)}>
+                  {v === 'auto' ? t('models.visionAuto') : v === 'on' ? t('models.visionOn') : t('models.visionOff')}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : null}
-      <button
-        type="button"
-        aria-label={t('models.removeModel', { name: model.name })}
-        title={t('models.removeModel', { name: model.name })}
-        className="rounded p-0.5 text-nb-muted opacity-0 hover:bg-nb-bg hover:text-nb-fg focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-nb-accent group-hover:opacity-100"
-        onClick={onRemove}>
-        <CloseIcon size={14} />
-      </button>
     </li>
   );
 }
