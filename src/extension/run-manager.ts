@@ -1336,7 +1336,14 @@ export class RunManager {
         record.outcome = end.outcome;
         record.debt = loop.debt;
         record.guards = loop.guards.state;
-        if (end.status === 'failed' && end.reason) await this.#notice(conversationId, end.reason, 'error');
+        // No proxy exists (per AGENTS.md): the endpoint itself must allow the chrome-extension:// origin (or *).
+        // A network/CORS refusal has no status code, so surface it as a distinct origin-allowance notice instead of
+        // the raw "Failed to fetch" text. See Settings → Providers → OriginFix guidance.
+        const noticeReason =
+          end.status === 'failed' && end.reason && end.providerError?.network && end.providerError?.status === undefined
+            ? `${end.reason} — the endpoint must allow requests from browser extensions (CORS); see Settings → Providers.`
+            : end.reason;
+        if (end.status === 'failed' && noticeReason) await this.#notice(conversationId, noticeReason, 'error');
         if (end.status === 'stopped') {
           await this.#notice(conversationId, STOPPED_BY_USER, 'info');
           await new RunWriter(conversationId, runId).appNote(STOPPED_NOTE);
