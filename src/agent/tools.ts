@@ -125,7 +125,7 @@ export function toolsForRun(options: {
   agentTools?: AgentTool[];
 }): AgentTool[] {
   return allTools(options.agentTools).filter(
-    t => (t.required || !options.disabled?.includes(t.name)) && (t.name !== 'screenshot' || options.vision),
+    t => (t.required || !options.disabled?.includes(t.name)) && (t.name !== 'screenshot' || options.vision === true),
   );
 }
 

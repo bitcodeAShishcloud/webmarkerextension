@@ -698,7 +698,7 @@ export class AgentLoop {
    * describes it either way. No screenshot is taken on its own: the model reads the page's text and asks for one.
    */
   #screenshotImage(outcome: CallOutcome): CallOutcome['image'] | undefined {
-    if (outcome.call.toolName !== 'screenshot' || !this.options.model.profile.vision) return undefined;
+    if (outcome.call.toolName !== 'screenshot' || this.options.model.profile.vision !== true) return undefined;
     const data = outcome.result?.data as { base64?: string; mimeType?: string } | undefined;
     if (!outcome.result?.ok || !data?.base64) return undefined;
     return { data: data.base64, mediaType: data.mimeType ?? 'image/png', note: PAGE_IMAGE_LINE };
