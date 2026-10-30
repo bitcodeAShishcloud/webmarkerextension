@@ -111,6 +111,8 @@ export interface ProviderConfig {
   name: string;
   baseUrl?: string;
   models: ModelEntry[];
+  /** Whether the provider is on; absent or true means enabled. Defaults to enabled so stored providers stay on without migration. */
+  enabled?: boolean;
 }
 
 export const providersStorage = createStorage<ProviderConfig[]>('nb.providers', [], { liveUpdate: true });
@@ -197,9 +199,11 @@ export function usableModel(
 ): ModelRef | null {
   for (const ref of wanted) {
     const found = findModel(providers, ref);
-    if (found && !found.model.noToolCalling) return { providerId: found.provider.id, model: found.model.name };
+    if (found && found.provider.enabled !== false && !found.model.noToolCalling)
+      return { providerId: found.provider.id, model: found.model.name };
   }
   for (const p of providers) {
+    if (p.enabled === false) continue;
     const m = p.models.find(x => !x.noToolCalling);
     if (m) return { providerId: p.id, model: m.name };
   }

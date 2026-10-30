@@ -187,14 +187,16 @@ export function App() {
 
   const models: ModelChoice[] = useMemo(
     () =>
-      providers.flatMap(p =>
-        p.models
-          .filter(m => !m.noToolCalling)
-          .map(m => {
-            const ref = { providerId: p.id, model: m.name };
-            return { ref, label: `${m.name} · ${p.name}`, name: m.name, capability: capabilityOf(providers, ref) };
-          }),
-      ),
+      providers
+        .filter(p => p.enabled !== false)
+        .flatMap(p =>
+          p.models
+            .filter(m => !m.noToolCalling)
+            .map(m => {
+              const ref = { providerId: p.id, model: m.name };
+              return { ref, label: `${m.name} · ${p.name}`, name: m.name, capability: capabilityOf(providers, ref) };
+            }),
+        ),
     [providers],
   );
 

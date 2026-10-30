@@ -26,6 +26,7 @@
   "models.removeProvider": "Remove provider",
   "models.removeModel": "Remove {name}",
   "models.models": "Models",
+  "models.enabled": "Enabled",
   "models.keysNote": "Your API keys stay in this browser. They go only to their own provider, never to Nanobrowser or anyone else.",
   "models.providerName": "Name",
   "models.apiKey": "API key",

@@ -20,6 +20,7 @@ export function VoiceCard() {
   const keys = useStorage(keysStorage, EMPTY_KEYS);
 
   const choices = providers
+    .filter(p => p.enabled !== false)
     .filter(p => keys[p.id]?.trim())
     .flatMap(p =>
       voiceModelsFor(p.kind).map(m => ({ value: `${p.id}\u0000${m.id}`, label: `${p.name} · ${m.label}` })),

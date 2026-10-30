@@ -17,7 +17,7 @@ import {
 } from '@src/store/settings';
 import type { ModelEntry, ProviderConfig } from '@src/store/settings';
 import { newId } from '@src/store/conversations';
-import { Button, Input, Notice, Select } from '@src/ui/components';
+import { Button, Input, Notice, Select, Switch } from '@src/ui/components';
 import { SettingsCard } from './SettingsCard';
 import { VoiceCard } from './VoiceCard';
 import { listProblem, saveTest, testModel, wholeTestOnAdd } from './model-test';
@@ -95,11 +95,13 @@ export function ProvidersSection() {
     await providersStorage.set(list => [...list, provider]);
   };
 
-  const choices = providers.flatMap(p =>
-    p.models
-      .filter(m => !m.noToolCalling)
-      .map(m => ({ value: `${p.id}\u0000${m.name}`, label: `${p.name} · ${m.name}` })),
-  );
+  const choices = providers
+    .filter(p => p.enabled !== false)
+    .flatMap(p =>
+      p.models
+        .filter(m => !m.noToolCalling)
+        .map(m => ({ value: `${p.id}\u0000${m.name}`, label: `${p.name} · ${m.name}` })),
+    );
   const current = settings.defaultModel
     ? `${settings.defaultModel.providerId}\u0000${settings.defaultModel.model}`
     : '';
@@ -353,6 +355,7 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
    * changed since it was queued, so a key never goes to an address it was not tested with.
    */
   const runTests = (names: string[], mode: 'whole' | 'add') => {
+    if (provider.enabled === false) return;
     void providersStorage.get().then(list => {
       const queuedAt = list.find(p => p.id === provider.id)?.baseUrl ?? '';
       for (const modelName of names) enqueue(modelName, mode, queuedAt);
@@ -383,6 +386,7 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
   };
 
   const testAll = () => {
+    if (provider.enabled === false) return;
     setResults({});
     runTests(
       provider.models.map(m => m.name),
@@ -400,7 +404,7 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
   });
 
   return (
-    <li className="flex flex-col gap-3 py-6">
+    <li className={`flex flex-col gap-3 py-6${provider.enabled === false ? ' opacity-50' : ''}`}>
       <div className="flex flex-wrap items-center gap-2">
         <span className="font-medium">{name || info.label}</span>
         {name && name !== info.label && !PRESETS.some(p => p.label === name) ? (
@@ -482,6 +486,13 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
             />
           </Line>
         ) : null}
+        <Line label={t('models.enabled')}>
+          <Switch
+            checked={provider.enabled !== false}
+            onChange={enabled => void updateProvider(provider.id, { enabled })}
+            aria-label={t('models.enabled')}
+          />
+        </Line>
         <Line label={t('models.models')}>
           {provider.models.length ? (
             <ul className="mb-2 flex flex-wrap gap-2" aria-label={t('models.models')}>

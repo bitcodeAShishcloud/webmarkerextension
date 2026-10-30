@@ -26,6 +26,7 @@
   "models.removeProvider": "移除服务商",
   "models.removeModel": "移除 {name}",
   "models.models": "模型",
+  "models.enabled": "启用",
   "models.keysNote": "你的 API 密钥只保存在此浏览器中，只会发送给对应的服务商，绝不会发送给 Nanobrowser 或其他任何人。",
   "models.providerName": "名称",
   "models.apiKey": "API 密钥",
