@@ -107,9 +107,21 @@ export class ScriptedModel {
             type: 'finish',
             finishReason: { unified, raw: unified },
           };
-          // null means "server omitted usage": leave the field off entirely.
+          // null means "server omitted usage": emit undefined totals so the SDK yields undefined and streamTurn's
+          // toUsage collapses them to null. Leaving the field off (or using createNullLanguageModelUsage) makes the
+          // SDK crash reading inputTokens.
           // undefined means "not specified": keep the existing default of 100/10.
-          if (reply.usage !== null) {
+          if (reply.usage === null) {
+            finishPart.usage = {
+              inputTokens: { total: undefined, noCache: undefined, cacheRead: undefined, cacheWrite: undefined },
+              outputTokens: { total: undefined, text: undefined, reasoning: undefined },
+            };
+          } else if (reply.usage === undefined) {
+            finishPart.usage = {
+              inputTokens: { total: 100, noCache: 100, cacheRead: 0, cacheWrite: 0 },
+              outputTokens: { total: 10, text: 10, reasoning: 0 },
+            };
+          } else {
             const input = reply.usage?.input ?? 100;
             const output = reply.usage?.output ?? 10;
             const reasoning = reply.usage?.reasoning ?? 0;

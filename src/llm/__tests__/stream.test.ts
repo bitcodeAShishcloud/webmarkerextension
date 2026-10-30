@@ -126,6 +126,16 @@ describe('streamTurn', () => {
     });
     expect(result.finish).toBe('aborted');
   });
+
+  it('returns null usage when the server omits it', async () => {
+    const scripted = new ScriptedModel([{ text: 'ok', usage: null }]);
+    const result = await streamTurn({
+      chat: scripted.chat(),
+      system: '',
+      messages: [{ role: 'user', content: 'x' }],
+    });
+    expect(result.usage).toBeNull();
+  });
 });
 
 describe('backoffMs', () => {

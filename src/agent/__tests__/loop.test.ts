@@ -305,6 +305,15 @@ describe('the loop', () => {
     expect(second.role).toBe('user');
     expect(JSON.stringify(second.content)).toContain('Use the second address instead');
   });
+
+  it('degrades gracefully to estimation when usage is null', async () => {
+    const { loop } = await setup([
+      { toolCalls: [call('snapshot', {}, 'a')], usage: null },
+      { toolCalls: [call('done', { outcome: 'success', summary: 'All done.' }, 'd')], usage: null },
+    ]);
+    const end = await loop.run();
+    expect(end.status).toBe('done');
+  });
 });
 
 describe('a page prompt dialog left open by a call', () => {
