@@ -10,14 +10,14 @@
 - [x] **CMOD-01**: User can add an OpenAI-compatible provider with a custom base URL and API key in Settings → Providers
 - [x] **CMOD-02**: User can add one or more model ids to a custom provider (manual entry and from the `/models` list)
 - [x] **CMOD-03**: User can set per-model MAX_TOKENS (max output) and CONTEXT_WINDOW values
-- [ ] **CMOD-04**: Per-model limits feed `resolveProfile` (context window, max output) used by the agent loop and compaction
+- [x] **CMOD-04**: Per-model limits feed `resolveProfile` (context window, max output) used by the agent loop and compaction
 - [x] **CMOD-05**: User can override (enable/disable) vision per model
 - [x] **CMOD-06**: Settings shows detected vs. user-set values for context window, max output, and vision
 - [x] **CMOD-07**: User can enable/disable a provider without deleting it
 - [x] **CMOD-08**: Base URL is normalized (trailing slash, `/v1` handling) for custom endpoints
 - [x] **CMOD-09**: Model list supports search/filter for large catalogues
-- [ ] **CMOD-10**: Test models probes tool calling and marks models that cannot tool-call; such models cannot be selected as default
-- [ ] **CMOD-11**: Vision capability is auto-detected and gates the screenshot tool
+- [x] **CMOD-10**: Test models probes tool calling and marks models that cannot tool-call; such models cannot be selected as default
+- [x] **CMOD-11**: Vision capability is auto-detected and gates the screenshot tool
 - [ ] **CMOD-12**: A custom model with tool calling can be selected as the default model and used to run the agent
 
 ## v2 Requirements
@@ -54,9 +54,9 @@
 | CMOD-07 | Phase 1 | Complete |
 | CMOD-08 | Phase 1 | Complete |
 | CMOD-09 | Phase 1 | Complete |
-| CMOD-04 | Phase 2 | Pending |
-| CMOD-10 | Phase 3 | Pending |
-| CMOD-11 | Phase 3 | Pending |
+| CMOD-04 | Phase 2 | Complete |
+| CMOD-10 | Phase 3 | Complete |
+| CMOD-11 | Phase 3 | Complete |
 | CMOD-12 | Phase 4 | Pending |
 
 **Coverage:**
