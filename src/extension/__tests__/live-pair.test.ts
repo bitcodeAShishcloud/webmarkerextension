@@ -76,12 +76,27 @@ describe('settings', () => {
           detectedContext: 8192,
           noToolCalling: true,
           reasoningSupport: 'none',
-          overrides: { vision: true },
+          overrides: { contextWindow: 1000, maxOutput: 500, vision: true },
         },
       ],
     };
     expect(withBaseUrl(provider, 'http://a/v1')).toBe(provider);
-    expect(withBaseUrl(provider, 'http://b/v1').models).toEqual([{ name: 'm', overrides: { vision: true } }]);
+    const changed = withBaseUrl(provider, 'http://b/v1');
+    expect(changed.models).toEqual([{ name: 'm', overrides: { contextWindow: 1000, maxOutput: 500, vision: true } }]);
+    // overrides survive the base-URL change (D-03)
+    expect(changed.models[0].overrides).toEqual(provider.models[0].overrides);
+  });
+
+  it('keeps overrides with contextWindow, maxOutput and vision across withBaseUrl (D-03)', () => {
+    const provider: ProviderConfig = {
+      id: 'p',
+      kind: 'openai-compatible',
+      name: 'P',
+      baseUrl: 'http://a/v1',
+      models: [{ name: 'm', overrides: { contextWindow: 4096, maxOutput: 1024, vision: false } }],
+    };
+    const changed = withBaseUrl(provider, 'http://b/v1');
+    expect(changed.models[0].overrides).toEqual({ contextWindow: 4096, maxOutput: 1024, vision: false });
   });
 
   it('reads the capability from the probe, then the catalogue', () => {
