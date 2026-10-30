@@ -46,11 +46,23 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| CMOD-01 | Phase 1 | Pending |
+| CMOD-02 | Phase 1 | Pending |
+| CMOD-03 | Phase 1 | Pending |
+| CMOD-05 | Phase 1 | Pending |
+| CMOD-06 | Phase 1 | Pending |
+| CMOD-07 | Phase 1 | Pending |
+| CMOD-08 | Phase 1 | Pending |
+| CMOD-09 | Phase 1 | Pending |
+| CMOD-04 | Phase 2 | Pending |
+| CMOD-10 | Phase 3 | Pending |
+| CMOD-11 | Phase 3 | Pending |
+| CMOD-12 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 12 total
-- Mapped to phases: 0
-- Unmapped: 12 ⚠️ (to be filled by roadmap creation)
+- Mapped to phases: 12
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-10-30*

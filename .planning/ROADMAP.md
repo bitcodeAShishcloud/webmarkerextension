@@ -1,0 +1,71 @@
+# Roadmap: Nanobrowser
+
+## Overview
+
+Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary endpoints and already stores per-model overrides, so this milestone is wiring rather than new infrastructure: expose per-model limits and vision in Settings, wire them safely through profile resolution, harden the test probes, and verify end-to-end agent runs on a user-configured model.
+
+## Phases
+
+- [ ] **Phase 1: Settings UI & Validation** - Per-model limits, vision override, provider toggle, base-URL normalization, detected-vs-set display, i18n
+- [ ] **Phase 2: Profile Wiring & Validation** - Overrides feed resolveProfile with safe clamping, local concurrency limits
+- [ ] **Phase 3: Test Probe Robustness** - Tool-calling and vision probes with false-positive/negative mitigations
+- [ ] **Phase 4: Agent Integration** - Screenshot gating, usage-null degradation, CORS docs, end-to-end run
+
+## Phase Details
+
+### Phase 1: Settings UI & Validation
+**Goal**: Users can enter and manage per-model limits, vision, and provider settings with validation
+**Depends on**: Nothing (first phase)
+**Requirements**: CMOD-01, CMOD-02, CMOD-03, CMOD-05, CMOD-06, CMOD-07, CMOD-08, CMOD-09
+**Success Criteria** (what must be TRUE):
+  1. User can add an OpenAI-compatible provider with a custom base URL and API key in Settings → Providers
+  2. User can add one or more model ids (manual entry and from the `/models` list) and search/filter large catalogues
+  3. User can set per-model MAX_TOKENS (max output) and CONTEXT_WINDOW and override (enable/disable) vision per model
+  4. Settings shows detected vs. user-set values for context window, max output, and vision
+  5. User can enable/disable a provider without deleting it
+  6. Base URL is normalized (trailing slash trimmed) and validated for scheme/host
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 2: Profile Wiring & Validation
+**Goal**: Per-model limits and vision feed resolveProfile safely, and local endpoints are concurrency-limited
+**Depends on**: Phase 1
+**Requirements**: CMOD-04
+**Success Criteria** (what must be TRUE):
+  1. Per-model limits feed `resolveProfile` (context window, max output) used by the agent loop and compaction
+  2. User-entered context window is clamped to the server-reported value when both exist (`Math.min`)
+  3. `requestOutputLimit` honors the user's cap (floor `Math.min(profile.maxOutput, 1024)`)
+  4. Overrides survive `withBaseUrl` and `saveTest` merges (regression tested)
+  5. Local custom endpoints (localhost) get `maxConcurrent: 1` via `isCloudEndpoint(kind, baseUrl)`
+**Plans**: TBD
+
+### Phase 3: Test Probe Robustness
+**Goal**: Tool-calling and vision detection are accurate and don't misclassify models
+**Depends on**: Phase 2
+**Requirements**: CMOD-10, CMOD-11
+**Success Criteria** (what must be TRUE):
+  1. Test models probes tool calling and marks models that cannot tool-call; such models cannot be selected as default
+  2. Vision probe requires the answer to contain "red"; a non-matching 200 yields `vision = false`/unknown, with manual override authoritative
+  3. Tool probe uses `Math.max(1024, userMaxOutput)` capped at 4096 and retries once at 4096 on `CUT_SHORT` before marking `noToolCalling`
+  4. Probe failures surface the server's exact 400 body; streaming/usage is treated as optional (estimate when null)
+**Plans**: TBD
+
+### Phase 4: Agent Integration
+**Goal**: A custom tool-calling model runs the agent with correct vision gating and usage handling
+**Depends on**: Phase 3
+**Requirements**: CMOD-12
+**Success Criteria** (what must be TRUE):
+  1. A custom model with tool calling can be selected as the default model and used to run the agent
+  2. Screenshot tool is registered only when `profile.vision === true` (verified by a test flipping `overrides.vision`)
+  3. Context management degrades gracefully when usage comes back null (estimation)
+  4. CORS-blocked endpoints surface a distinct status-0 error and document origin allowance
+**Plans**: TBD
+
+## Progress
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. Settings UI & Validation | 0/TBD | Not started | - |
+| 2. Profile Wiring & Validation | 0/TBD | Not started | - |
+| 3. Test Probe Robustness | 0/TBD | Not started | - |
+| 4. Agent Integration | 0/TBD | Not started | - |
