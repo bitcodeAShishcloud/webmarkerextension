@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { createModel, openAICompatibleBaseUrl } from '../providers';
+import { createModel, normalizeBaseUrl, openAICompatibleBaseUrl, validateBaseUrl } from '../providers';
 import type { ModelSpec } from '../providers';
 import { streamTurn } from '../stream';
 
@@ -136,5 +136,49 @@ describe('helpers', () => {
 
   it("keeps OpenRouter's fixed address, whatever an older card stored", () => {
     expect(openAICompatibleBaseUrl('openrouter', 'https://example.com/v1')).toBe('https://openrouter.ai/api/v1');
+  });
+});
+
+describe('normalizeBaseUrl', () => {
+  it('trims whitespace and trailing slashes', () => {
+    expect(normalizeBaseUrl('openai-compatible', '  http://localhost:8000/v1/  ')).toBe('http://localhost:8000/v1');
+    expect(normalizeBaseUrl('ollama', 'http://box:11434///')).toBe('http://box:11434/v1');
+  });
+  it('returns empty for empty input', () => {
+    expect(normalizeBaseUrl('ollama', '   ')).toBe('');
+    expect(normalizeBaseUrl('openai-compatible', '')).toBe('');
+  });
+  it('appends /v1 for ollama, lmstudio and openai-compatible when missing', () => {
+    expect(normalizeBaseUrl('ollama', 'http://localhost:11434')).toBe('http://localhost:11434/v1');
+    expect(normalizeBaseUrl('lmstudio', 'http://localhost:1234')).toBe('http://localhost:1234/v1');
+    expect(normalizeBaseUrl('openai-compatible', 'http://10.0.0.2:8000')).toBe('http://10.0.0.2:8000/v1');
+  });
+  it('keeps an existing version segment', () => {
+    expect(normalizeBaseUrl('ollama', 'http://localhost:11434/v2')).toBe('http://localhost:11434/v2');
+    expect(normalizeBaseUrl('openai-compatible', 'http://10.0.0.2:8000/v1')).toBe('http://10.0.0.2:8000/v1');
+  });
+  it('does not append for other kinds', () => {
+    expect(normalizeBaseUrl('anthropic', 'https://api.anthropic.com/v1/')).toBe('https://api.anthropic.com/v1');
+  });
+});
+
+describe('validateBaseUrl', () => {
+  it('accepts empty', () => {
+    expect(validateBaseUrl('')).toBeNull();
+    expect(validateBaseUrl('   ')).toBeNull();
+  });
+  it('accepts valid http/https URLs', () => {
+    expect(validateBaseUrl('http://localhost:11434')).toBeNull();
+    expect(validateBaseUrl('https://api.example.com/v1')).toBeNull();
+  });
+  it('rejects bad schemes', () => {
+    expect(validateBaseUrl('javascript:alert(1)')).toBe('models.urlScheme');
+    expect(validateBaseUrl('ftp://example.com')).toBe('models.urlScheme');
+  });
+  it('rejects missing host', () => {
+    expect(validateBaseUrl('http://')).toBe('models.urlHost');
+  });
+  it('rejects unparseable input', () => {
+    expect(validateBaseUrl('not a url')).toBe('models.invalidUrl');
   });
 });
