@@ -62,8 +62,42 @@ export function openAICompatibleBaseUrl(kind: ProviderKind, baseUrl?: string): s
   if (kind === 'openrouter') return fallback;
   const url = (baseUrl?.trim() || fallback)?.replace(/\/+$/, '');
   if (!url) return undefined;
-  if (kind === 'ollama' || kind === 'lmstudio') return url.endsWith('/v1') ? url : `${url}/v1`;
+  if (kind === 'ollama' || kind === 'lmstudio' || kind === 'openai-compatible')
+    return /\/v\d+$/.test(url) ? url : `${url}/v1`;
   return url;
+}
+
+/**
+ * Normalize a base URL for storage: trim, strip trailing slashes, empty for empty input, and append `/v1` when the
+ * kind is a chat-completions endpoint (ollama, lmstudio, openai-compatible) and the result does not already end in a
+ * version segment (`/vN`).
+ */
+export function normalizeBaseUrl(kind: ProviderKind, raw: string): string {
+  const trimmed = raw.trim().replace(/\/+$/, '');
+  if (!trimmed) return '';
+  if (kind === 'ollama' || kind === 'lmstudio' || kind === 'openai-compatible')
+    return /\/v\d+$/.test(trimmed) ? trimmed : `${trimmed}/v1`;
+  return trimmed;
+}
+
+/**
+ * Validate a raw base URL string. Returns null when valid (or empty), otherwise a locale key for the inline warning.
+ * The value is still saved regardless; this only drives the warning.
+ */
+export function validateBaseUrl(raw: string): string | null {
+  const v = raw.trim();
+  if (!v) return null;
+  // A scheme with no host (e.g. "http://") is not a usable address.
+  if (/^https?:\/\/\/?$/i.test(v)) return 'models.urlHost';
+  let url: URL;
+  try {
+    url = new URL(v);
+  } catch {
+    return 'models.invalidUrl';
+  }
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return 'models.urlScheme';
+  if (!url.hostname) return 'models.urlHost';
+  return null;
 }
 
 export function createModel(spec: ModelSpec, options: CreateModelOptions = {}): ChatModel {

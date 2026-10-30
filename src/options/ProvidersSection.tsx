@@ -3,7 +3,7 @@
 // src/llm from this page; settings are written through chrome.storage, with no worker command.
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { listModels } from '@src/llm';
+import { listModels, normalizeBaseUrl, validateBaseUrl } from '@src/llm';
 import type { ConnectionResult, ModelList, ProviderKind } from '@src/llm';
 import type { ReasoningEffort } from '@src/llm/catalogue';
 import {
@@ -488,7 +488,16 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
               }}
               onFocus={() => (urlAtFocus.current = provider.baseUrl ?? '')}
               onBlur={() => {
-                if (urlAtFocus.current !== null && urlAtFocus.current !== (provider.baseUrl ?? '')) {
+                const raw = provider.baseUrl ?? '';
+                const normalized = normalizeBaseUrl(provider.kind, raw);
+                const changedFromFocus = urlAtFocus.current !== null && urlAtFocus.current !== raw;
+                const normalizedChanged = normalized !== raw;
+                if (normalizedChanged) {
+                  void providersStorage.set(list =>
+                    list.map(p => (p.id === provider.id ? withBaseUrl(p, normalized) : p)),
+                  );
+                }
+                if ((changedFromFocus || normalizedChanged) && provider.models.length) {
                   runTests(
                     provider.models.map(m => m.name),
                     'add',
@@ -497,6 +506,11 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
                 urlAtFocus.current = null;
               }}
             />
+            {validateBaseUrl(provider.baseUrl ?? '') ? (
+              <p className="text-xs text-amber-600 dark:text-amber-400">
+                {t(validateBaseUrl(provider.baseUrl ?? '') as MessageKey)}
+              </p>
+            ) : null}
           </Line>
         ) : null}
         <Line label={t('models.enabled')}>
