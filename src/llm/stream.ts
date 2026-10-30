@@ -247,11 +247,11 @@ async function streamTurnNow(request: TurnRequest): Promise<TurnResult> {
             if (part.warnings.some(w => /reasoning|effort|thinking/i.test(JSON.stringify(w)))) reasoningIgnored = true;
             break;
           case 'finish-step':
-            usage = toUsage(part.usage);
+            if (part.usage) usage = toUsage(part.usage);
             break;
           case 'finish':
             finish = part.finishReason;
-            usage = usage ?? toUsage(part.totalUsage);
+            if (!usage && part.totalUsage) usage = toUsage(part.totalUsage);
             break;
           case 'abort':
             finish = 'aborted';

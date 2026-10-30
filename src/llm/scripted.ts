@@ -9,7 +9,7 @@ export interface ScriptedReply {
   toolCalls?: Array<{ name: string; input: unknown; id?: string }>;
   /** Default: 'tool-calls' when there are calls, else 'stop'. */
   finish?: 'stop' | 'length' | 'tool-calls' | 'content-filter' | 'error' | 'other';
-  usage?: { input: number; output: number; reasoning?: number };
+  usage?: { input: number; output: number; reasoning?: number } | null;
   /** Rejected before anything streams, as a provider's HTTP error would be. */
   error?: unknown;
   /** Sent as an error part after the text, as a stream cut off part way. */
@@ -103,23 +103,22 @@ export class ScriptedModel {
             });
           }
           const unified = reply.finish ?? (reply.toolCalls?.length ? 'tool-calls' : 'stop');
-          controller.enqueue({
+          const finishPart: Record<string, unknown> = {
             type: 'finish',
             finishReason: { unified, raw: unified },
-            usage: {
-              inputTokens: {
-                total: reply.usage?.input ?? 100,
-                noCache: reply.usage?.input ?? 100,
-                cacheRead: 0,
-                cacheWrite: 0,
-              },
-              outputTokens: {
-                total: reply.usage?.output ?? 10,
-                text: (reply.usage?.output ?? 10) - (reply.usage?.reasoning ?? 0),
-                reasoning: reply.usage?.reasoning ?? 0,
-              },
-            },
-          });
+          };
+          // null means "server omitted usage": leave the field off entirely.
+          // undefined means "not specified": keep the existing default of 100/10.
+          if (reply.usage !== null) {
+            const input = reply.usage?.input ?? 100;
+            const output = reply.usage?.output ?? 10;
+            const reasoning = reply.usage?.reasoning ?? 0;
+            finishPart.usage = {
+              inputTokens: { total: input, noCache: input, cacheRead: 0, cacheWrite: 0 },
+              outputTokens: { total: output, text: output - reasoning, reasoning },
+            };
+          }
+          controller.enqueue(finishPart);
           controller.close();
         },
       });
