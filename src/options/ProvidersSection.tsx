@@ -312,7 +312,8 @@ function ProviderItem({ provider }: { provider: ProviderConfig }) {
       models: provider.models.map(x => {
         if (x.name !== name) return x;
         if (overrides === undefined) {
-          const { overrides: _removed, ...rest } = x;
+          const rest = { ...x };
+          delete rest.overrides;
           return rest;
         }
         return { ...x, overrides };
@@ -820,6 +821,12 @@ function ModelChip({
 
   const visionState: 'auto' | 'on' | 'off' =
     model.overrides?.vision === undefined ? 'auto' : model.overrides.vision ? 'on' : 'off';
+  const detectedContext =
+    model.tested?.contextWindow ?? model.fromApi?.contextWindow ?? (local ? model.detectedContext : undefined);
+  const detectedMaxOutput = model.tested?.maxOutput ?? model.fromApi?.maxOutput;
+  const detectedVision = model.tested?.vision ?? model.fromApi?.vision;
+  const effectiveVision = model.overrides?.vision ?? detectedVision ?? false;
+  const visionSourceKey = model.fromApi?.vision !== undefined ? 'models.visionSourceApi' : 'models.visionSourceProbe';
 
   return (
     <li
@@ -831,6 +838,7 @@ function ModelChip({
       }
       className={`group flex flex-col gap-1.5 rounded-lg border py-1 pl-2.5 pr-1 ${model.noToolCalling ? 'border-red-300 dark:border-red-800' : 'border-nb-border'} bg-nb-surface`}>
       <div className="flex items-center gap-1.5">
+        <EyeIcon size={14} filled={effectiveVision} className={effectiveVision ? '' : 'text-nb-muted opacity-40'} />
         {passed ? <CheckIcon size={14} className="text-emerald-600 dark:text-emerald-400" /> : null}
         <span className="font-mono">{model.name}</span>
         {testing ? <span className="text-nb-muted">· {t('models.testing')}</span> : null}
@@ -861,6 +869,11 @@ function ModelChip({
               aria-label={t('models.contextWindow')}
               className="w-28"
               value={cwDraft}
+              placeholder={
+                model.overrides?.contextWindow === undefined && detectedContext !== undefined
+                  ? String(detectedContext)
+                  : undefined
+              }
               onChange={e => {
                 setCwDraft(e.target.value);
                 setCwError(false);
@@ -870,6 +883,9 @@ function ModelChip({
                 if (e.key === 'Enter') commitLimit('contextWindow', cwDraft, setCwError);
               }}
             />
+            {model.overrides?.contextWindow === undefined && detectedContext !== undefined ? (
+              <span className="rounded bg-nb-surface px-1.5 py-0.5 text-xs text-nb-muted">{t('models.detected')}</span>
+            ) : null}
             {cwError ? <span className="text-red-700 dark:text-red-300">{t('models.invalidNumber')}</span> : null}
           </label>
           <label className="flex items-center gap-2">
@@ -878,6 +894,11 @@ function ModelChip({
               aria-label={t('models.maxTokens')}
               className="w-28"
               value={moDraft}
+              placeholder={
+                model.overrides?.maxOutput === undefined && detectedMaxOutput !== undefined
+                  ? String(detectedMaxOutput)
+                  : undefined
+              }
               onChange={e => {
                 setMoDraft(e.target.value);
                 setMoError(false);
@@ -887,6 +908,9 @@ function ModelChip({
                 if (e.key === 'Enter') commitLimit('maxOutput', moDraft, setMoError);
               }}
             />
+            {model.overrides?.maxOutput === undefined && detectedMaxOutput !== undefined ? (
+              <span className="rounded bg-nb-surface px-1.5 py-0.5 text-xs text-nb-muted">{t('models.detected')}</span>
+            ) : null}
             {moError ? <span className="text-red-700 dark:text-red-300">{t('models.invalidNumber')}</span> : null}
           </label>
           <div className="flex items-center gap-2">
@@ -902,7 +926,17 @@ function ModelChip({
                 </Button>
               ))}
             </div>
+            {visionState === 'auto' && detectedVision !== undefined ? (
+              <span
+                className="rounded bg-nb-surface px-1.5 py-0.5 text-xs text-nb-muted"
+                title={`${t(visionSourceKey)}: ${detectedVision ? t('models.visionOn') : t('models.visionOff')}`}>
+                {t('models.detected')}
+              </span>
+            ) : null}
           </div>
+          {visionState === 'on' && detectedVision === false ? (
+            <p className="text-xs text-nb-muted">{t('models.visionConflict', { value: t('models.visionOff') })}</p>
+          ) : null}
         </div>
       ) : null}
     </li>

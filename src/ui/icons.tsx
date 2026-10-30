@@ -117,11 +117,11 @@ export const ListIcon = (p: IconProps) => (
   </Svg>
 );
 
-/** Show a hidden value: an open eye. */
-export const EyeIcon = (p: IconProps) => (
+/** Show a hidden value: an open eye. Filled when `filled`. */
+export const EyeIcon = ({ filled = false, ...p }: IconProps & { filled?: boolean }) => (
   <Svg {...p}>
     <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />
-    <circle cx="12" cy="12" r="3" />
+    <circle cx="12" cy="12" r="3" fill={filled ? 'currentColor' : 'none'} />
   </Svg>
 );
 
