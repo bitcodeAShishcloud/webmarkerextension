@@ -78,10 +78,14 @@ Plans:
   3. Context management degrades gracefully when usage comes back null (estimation)
   4. CORS-blocked endpoints surface a distinct status-0 error and document origin allowance
 
-**Plans**: 2/2 plans complete
+**Plans**: 2/3 plans executed
 
 Plans:
+**Wave 1**
 - [x] 04-01-PLAN.md - Robustness edits: strict screenshot gating, null-usage guard, CORS notice
+- [ ] 04-03-PLAN.md - Rebrand product identity to WebMarker Extensions across UI strings, docs, metadata and links
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [x] 04-02-PLAN.md - Verification tests
 
 ## Progress
@@ -91,4 +95,4 @@ Plans:
 | 1. Settings UI & Validation | 2/2 | Complete    | 2026-10-30 |
 | 2. Profile Wiring & Validation | 1/1 | Complete    | 2026-10-31 |
 | 3. Test Probe Robustness | 1/1 | Complete    | 2026-10-31 |
-| 4. Agent Integration | 2/2 | Complete    | 2026-10-31 |
+| 4. Agent Integration | 2/3 | In Progress |  |
