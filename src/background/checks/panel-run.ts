@@ -111,7 +111,7 @@ defineCheck({
       ]);
       await panel(id, 'type-send', { text: 'A long task' });
       report.capped = (await until(body, b => b.includes('stopped at its turn limit'), 'capped')).includes('Continue');
-      await chrome.storage.local.set({ 'nb.settings': { ...settings, turnCap: 100 } });
+      await chrome.storage.local.set({ 'nb.settings': { ...settings, turnCap: 200 } });
       await panel(id, 'click', { label: 'Continue' });
       await waitForText(id, 'Continued.');
       report.image = await chrome.tabs.captureVisibleTab(view.windowId, { format: 'png' });

@@ -43,7 +43,7 @@ export const DEFAULT_SETTINGS: Settings = {
   defaultMode: 'ask',
   defaultModel: null,
   reasoning: 'medium',
-  turnCap: 100,
+  turnCap: 200,
   customInstructions: '',
   theme: 'system',
   uiLanguage: 'auto',
