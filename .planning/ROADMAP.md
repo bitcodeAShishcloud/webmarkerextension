@@ -78,7 +78,7 @@ Plans:
   3. Context management degrades gracefully when usage comes back null (estimation)
   4. CORS-blocked endpoints surface a distinct status-0 error and document origin allowance
 
-**Plans**: 5/6 plans executed
+**Plans**: 5/7 plans executed
 
 Plans:
 **Wave 1**
@@ -87,6 +87,7 @@ Plans:
 - [x] 04-04-PLAN.md - Replace toolbar icons and UI logo with the WebMaker W mark and horizontal lockup
 - [x] 04-05-PLAN.md - Colour theme: white canvas, #C15F3C terracotta accent, #B1ADA1 borders, coherent dark mode
 - [ ] 04-06-PLAN.md - All-white canvas in both themes: white tokens, dereferenced blue/navy backgrounds, byte-identical brand assets
+- [ ] 04-07-PLAN.md - Warm-gray canvas in both themes: #B1ADA1 tokens, derived AA shades, accent-as-text removed, byte-identical brand assets
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [x] 04-02-PLAN.md - Verification tests
@@ -98,4 +99,4 @@ Plans:
 | 1. Settings UI & Validation | 2/2 | Complete    | 2026-10-30 |
 | 2. Profile Wiring & Validation | 1/1 | Complete    | 2026-10-31 |
 | 3. Test Probe Robustness | 1/1 | Complete    | 2026-10-31 |
-| 4. Agent Integration | 5/6 | In Progress |  |
+| 4. Agent Integration | 5/7 | In Progress |  |
