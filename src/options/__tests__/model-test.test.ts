@@ -2,7 +2,7 @@
 import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { IDBFactory } from 'fake-indexeddb';
-import { closeDb, db } from '@src/store/db';
+import { closeDb } from '@src/store/db';
 import { providersStorage, type ProviderConfig } from '@src/store/settings';
 import { saveTest } from '../model-test';
 

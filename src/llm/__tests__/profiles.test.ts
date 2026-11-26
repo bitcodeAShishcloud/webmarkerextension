@@ -30,7 +30,6 @@ describe('model profiles', () => {
   it('clamps an inflated override context window to the server fact (D-01)', () => {
     const base = { kind: 'ollama' as const, modelName: 'qwen3:8b' };
     // override above the server fact clamps down
-    const fromApi = { contextWindow: 32768, at: 'x' } as never;
     expect(
       resolveProfile({ ...base, overrides: { contextWindow: 100000 }, fromApi: { contextWindow: 32768, at: 'x' } })
         .contextWindow,
