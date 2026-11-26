@@ -4,14 +4,14 @@
 
 /*
  * The brand: a #C15F3C terracotta accent for fills and focus on a warm-gray #B1ADA1 canvas with #0F1B2D dark
- * text in both light and dark themes. #443E38 muted text and #6E2E17 links meet WCAG AA on that canvas; the
+ * text in both light and dark themes. #38332D muted text (5.574:1) and #6E2E17 links meet WCAG AA on that canvas; the
  * system's sans face sets the interface and the system's serif sets answers, as in Claude in Chrome's side panel.
  */
 :root {
   --nb-canvas: 177 173 161;
   --nb-bg: 177 173 161;
   --nb-fg: 15 27 45;
-  --nb-muted: 68 62 56;
+  --nb-muted: 56 51 45;
   --nb-border: 95 91 83;
   --nb-surface: 177 173 161;
   --nb-accent: 193 95 60;
@@ -27,7 +27,7 @@
   --nb-canvas: 177 173 161;
   --nb-bg: 177 173 161;
   --nb-fg: 15 27 45;
-  --nb-muted: 68 62 56;
+  --nb-muted: 56 51 45;
   --nb-border: 95 91 83;
   --nb-surface: 177 173 161;
   --nb-accent: 193 95 60;
@@ -63,6 +63,13 @@ h3 {
 
 ::selection {
   @apply bg-nb-sky/30;
+}
+
+/* Placeholders on the warm-gray canvas need an explicit token colour: Tailwind's preflight grey is too faint. */
+input::placeholder,
+textarea::placeholder {
+  color: rgb(var(--nb-muted));
+  opacity: 1;
 }
 
 /* The decorative wave behind the welcome and microphone pages: a warm-gray #B1ADA1 field in both themes, with
