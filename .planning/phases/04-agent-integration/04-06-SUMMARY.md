@@ -128,7 +128,7 @@ Each task was committed atomically:
 - **Found during:** Task 2 verification (post-edit gate).
 - **Issue:** The plan's built-CSS check required each selector to be immediately followed by `{`. WXT/esbuild minifies adjacent rules with identical declarations into one comma-separated selector list — `.nb-wave,.dark .nb-wave,.nb-start,.dark .nb-start,.dark .nb-field{background:rgb(var(--nb-canvas))}` — so the assertion failed `built rule missing: .nb-wave` even though the built CSS was correct and stronger than required.
 - **Fix:** Adapted only the temporary gate script to match each selector as an exact member of a rule's selector list rather than as a literal prefix of `{`. Every semantic assertion was kept: byte-exact source bodies, the white base in built CSS, and zero blue/navy/image literals in both source and built CSS.
-- **Files modified:** none in the repository — the adjustment was to the verification harness only (`%TEMP%/opencode/gate_task2.py`).
+- **Files modified:** none in the repository — the adjustment was to a throwaway verification script only (created outside the repository and deleted after use; no repo path).
 - **Verification:** `BACKGROUND_GATE_OK` after the adaptation; the verbatim Task 3 `AUDIT_GATE_OK` (which checks built literals generically, not rule shape) passed unchanged.
 - **Committed in:** no production change; Task 2 remains `5dc7e41`.
 
