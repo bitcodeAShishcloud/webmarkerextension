@@ -1,6 +1,6 @@
 // Chrome permissions on update and the features without the optional ones. Two checks:
 // - `permission-warnings`: the warnings Chrome would show for this build's manifest with the product's permission
-//   lists, against those of the old Nanobrowser's manifest (passed in the arguments by fixtures/autorun.mjs). An update
+//   lists, against those of the old version's manifest (passed in the arguments by fixtures/autorun.mjs). An update
 //   that adds a warning is turned off by Chrome until the user accepts it, so any warning the old version did not have
 //   fails the check. Run it before every release.
 // - `without-permissions`: run in the build with the product's lists (`pnpm autorun --product-permissions`), where
@@ -37,8 +37,8 @@ defineCheck({
     const own = chrome.runtime.getManifest() as unknown as Record<string, unknown>;
     const product: Record<string, unknown> = {
       ...own,
-      name: 'Nanobrowser',
-      description: 'Nanobrowser',
+      name: 'WebMarker Extensions',
+      description: 'WebMarker Extensions',
       ...permissionLists('product'),
     };
     delete product.default_locale;
@@ -161,7 +161,7 @@ defineCheck({
         'the Save card in Auto mode',
       );
       report.cardInAuto = card.includes('nb-check-optional.csv');
-      report.askFirstShown = card.includes('Chrome asks you first to let Nanobrowser save files.');
+      report.askFirstShown = card.includes('Chrome asks you first to let WebMarker Extensions save files.');
       await panel(id, 'click', { label: 'Save' });
       const refused = await until(
         async () => (await panel(id, 'read')).body,
@@ -217,7 +217,7 @@ defineCheck({
       await waitForLoad(settings.id!);
       await until(
         async () => (await options('read')).body ?? '',
-        b => b.includes('Welcome to Nanobrowser'),
+        b => b.includes('Welcome to WebMarker Extensions'),
         'the welcome page',
       );
       await options('click', { label: 'Next' });

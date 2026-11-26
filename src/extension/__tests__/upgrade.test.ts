@@ -129,7 +129,7 @@ describe('the default model and its effort', () => {
 
 describe('saved prompts', () => {
   it('skips the example prompts the old version seeded, in every old version of their text', () => {
-    expect(favoritesToMove(old.favorites).map(f => f.id)).toEqual([4, 5, 6]);
+    expect(favoritesToMove(old.favorites).map(f => f.id)).toEqual([2, 3, 4, 5, 6]);
     const older = {
       prompts: [
         {
@@ -196,7 +196,7 @@ describe('the move', () => {
       'shop.example',
     ]);
     expect(data['nb.upgrade']).toMatchObject({
-      favorites: 3,
+      favorites: 5,
       blockedSites: 3,
       skippedSites: 2,
       allowList: true,
@@ -208,7 +208,7 @@ describe('the move', () => {
     expect(data['nb.whatsNew']).toEqual({ version: '0.3', dismissed: false });
 
     const names = (await listShortcuts()).map(s => s.name).sort();
-    expect(names).toEqual(['daily-news-digest', 'explore-ai-papers', 'prompt-1', 'summarize']);
+    expect(names).toEqual(['daily-news-digest', 'explore-ai-papers', 'follow-us-on-x-twitter', 'prompt-1', 'star-us-on-github', 'summarize']);
 
     const left = Object.keys(data)
       .filter(k => !k.startsWith('nb.'))
@@ -307,7 +307,7 @@ describe('the move', () => {
     await upgradeFromOldVersion();
     const after = (await listShortcuts()).find(s => s.id === 'old-favorite-4')!;
     expect(after).toMatchObject({ text: 'My own words.', pinned: true });
-    expect((await listShortcuts()).length).toBe(4);
+    expect((await listShortcuts()).length).toBe(6);
     expect(data['nb.upgrade']).toBeDefined();
     expect(data['llm-api-keys']).toBeUndefined();
   });

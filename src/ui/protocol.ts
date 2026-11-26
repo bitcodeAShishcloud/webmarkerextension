@@ -218,7 +218,7 @@ export type PanelEventBody =
   | { type: 'usage'; turn: Usage; total: Usage }
   | { type: 'history'; items: ConversationSummary[] }
   | { type: 'tabs'; tabs: ScopeTab[] }
-  /** Text the user selected with "Ask Nanobrowser about this": a quote chip in the composer. */
+  /** Text the user selected with "Ask WebMarker Extensions about this": a quote chip in the composer. */
   | { type: 'selection'; text: string; url: string; title: string }
   /** A file the worker made for the composer (a screenshot of the tab), with a thumbnail. */
   | { type: 'attached'; ref: AttachmentRef; preview?: string }

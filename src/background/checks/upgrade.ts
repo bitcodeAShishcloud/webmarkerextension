@@ -1,4 +1,4 @@
-// The update from the old Nanobrowser, in a real browser. The old version's storage, a made-up copy, is written into
+// The update from the old version, in a real browser. The old version's storage, a made-up copy, is written into
 // chrome.storage.local, which is where an update to the same extension finds it, and the move runs as a worker start
 // runs it, twice. Then the panel's What's new card (the quick start hidden under it), Got it, and Settings → Data's
 // export and delete of the old conversations. What
@@ -20,7 +20,7 @@ import { sleep, waitForLoad } from './helpers';
 import { panel } from './panel-chat';
 
 const NB_KEYS = ['nb.providers', 'nb.keys', 'nb.settings', 'nb.siteRules', UPGRADE_KEY, WHATS_NEW_KEY];
-const CARD = "What's new in Nanobrowser 0.3";
+const CARD = "What's new in WebMarker Extensions 0.3";
 // The quick start's first fixed starter.
 const STARTER = 'Summarize this page';
 
@@ -39,7 +39,7 @@ async function until<T>(read: () => Promise<T>, done: (value: T) => boolean, tim
 
 defineCheck({
   name: 'upgrade',
-  title: 'Update from the old Nanobrowser',
+  title: 'Update from the old version',
   description: "The old version's data moved on a worker start, the panel's card, and the old conversations in Data.",
   async run() {
     // Everything the check touches is put back at the end, the old version's own data included, so it can also run on

@@ -1,4 +1,4 @@
-// Provider factories, ported from the current Nanobrowser's src/background/llm/providers.ts and reduced to the
+// Provider factories, ported from the current WebMarker Extensions' src/background/llm/providers.ts and reduced to the
 // providers of the first release. The loop runs tools itself, so a model handle is only a model, its call settings and
 // its provider options.
 import { createAnthropic } from '@ai-sdk/anthropic';
@@ -141,7 +141,7 @@ export function createModel(spec: ModelSpec, options: CreateModelOptions = {}): 
         apiKey: apiKey || kind,
         baseURL: openAICompatibleBaseUrl(kind, spec.baseUrl),
         ...(kind === 'openrouter'
-          ? { headers: { 'HTTP-Referer': 'https://nanobrowser.ai', 'X-Title': 'Nanobrowser' } }
+          ? { headers: { 'HTTP-Referer': 'https://github.com/bitcodeAShishcloud/webmarkerextension', 'X-Title': 'WebMarker Extensions' } }
           : {}),
         // OpenRouter reports a request's cost in its usage when asked.
         fetch: accounting?.fetch ?? fetch,

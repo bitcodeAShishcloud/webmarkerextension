@@ -13,7 +13,7 @@
 // .output/autorun-product, for the checks of the features without them (`without-permissions`); the checks that need
 // the permissions (`panel-tabs`, `panel-save`, ...) are not run with it.
 //
-// The check `permission-warnings` gets the old Nanobrowser's manifest (fixtures/upgrade/old-manifest.json) in its
+// The check `permission-warnings` gets the old version's manifest (fixtures/upgrade/old-manifest.json) in its
 // arguments.
 //
 // Chrome: CHROME_PATH, or the stable Chrome for Testing that pnpm install-chrome put in ~/.cache/puppeteer/chrome.

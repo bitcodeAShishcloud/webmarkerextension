@@ -64,8 +64,8 @@ defineCheck({
     await waitForLoad(welcome.id!);
     await sleep(600);
     try {
-      const first = await bodyWith('Welcome to Nanobrowser');
-      const coachMark = first.includes('Pin Nanobrowser to the toolbar');
+      const first = await bodyWith('Welcome to WebMarker Extensions');
+      const coachMark = first.includes('Pin WebMarker Extensions to the toolbar');
       const welcomeImage = await chrome.tabs.captureVisibleTab(welcome.windowId, { format: 'png' });
       await page('click', { label: 'Next' });
       await bodyWith('Pick a model: run one on your computer');
@@ -106,7 +106,7 @@ defineCheck({
         settingsOpened,
         locked,
         readinessSaid:
-          readiness.includes('Choose a model to start') && readiness.includes('Nanobrowser needs a model to chat.'),
+          readiness.includes('Choose a model to start') && readiness.includes('WebMarker Extensions needs a model to chat.'),
         coachMark,
         nextWaits,
         laterOff,

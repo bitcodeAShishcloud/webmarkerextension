@@ -1,4 +1,4 @@
-// The update from the old Nanobrowser (0.2). It ran on the same store listing, so its data is in this extension's
+// The update from the old version (0.2). It ran on the same store listing, so its data is in this extension's
 // chrome.storage.local. On each worker start, while that data is there, this moves the user's providers, keys, default
 // model, saved prompts and blocked sites into this version's stores, then removes the old keys. The old conversations
 // stay: this version cannot open them, and Settings → Data exports or deletes them.
@@ -164,13 +164,9 @@ const SEEDED: Array<{ title: string; content: string }> = [
       '- Go to https://huggingface.co/papers and click through each of the top 3 upvoted papers.\n- For each paper:\n  - Record the title, URL and upvotes\n  - Summarise the abstract section\n- Finally, compile together a summary of all 3 papers, ranked by upvotes',
   },
   {
-    title: '🐦 Follow us on X/Twitter!',
-    content: 'Follow us at https://x.com/nanobrowser_ai to stay updated on the latest news and features!',
-  },
-  {
     title: '🌟 Star us on GitHub!',
     content:
-      "Open the Nanobrowser repository at https://github.com/nanobrowser/nanobrowser and check if you've already starred it. If not, please support us by giving us a star!",
+      "Open the WebMarker Extensions repository at https://github.com/bitcodeAShishcloud/webmarkerextension and check if you've already starred it. If not, please support us by giving us a star!",
   },
 ];
 
