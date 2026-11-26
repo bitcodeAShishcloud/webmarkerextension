@@ -59,7 +59,8 @@ defineCheck({
         answerLanguage: system.includes('Answer in Simplified Chinese'),
         promptStaysEnglish: system.includes('## Untrusted content'),
         chromeStrings:
-          chrome.i18n.getMessage('extName') === 'WebMarker Extensions' && !!chrome.i18n.getMessage('menuAskAboutSelection'),
+          chrome.i18n.getMessage('extName') === 'WebMarker Extensions' &&
+          !!chrome.i18n.getMessage('menuAskAboutSelection'),
         image,
       };
       if (Object.values(report).includes(false)) {

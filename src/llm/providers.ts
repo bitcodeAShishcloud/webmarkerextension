@@ -141,7 +141,12 @@ export function createModel(spec: ModelSpec, options: CreateModelOptions = {}): 
         apiKey: apiKey || kind,
         baseURL: openAICompatibleBaseUrl(kind, spec.baseUrl),
         ...(kind === 'openrouter'
-          ? { headers: { 'HTTP-Referer': 'https://github.com/bitcodeAShishcloud/webmarkerextension', 'X-Title': 'WebMarker Extensions' } }
+          ? {
+              headers: {
+                'HTTP-Referer': 'https://github.com/bitcodeAShishcloud/webmarkerextension',
+                'X-Title': 'WebMarker Extensions',
+              },
+            }
           : {}),
         // OpenRouter reports a request's cost in its usage when asked.
         fetch: accounting?.fetch ?? fetch,

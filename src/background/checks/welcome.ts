@@ -106,7 +106,8 @@ defineCheck({
         settingsOpened,
         locked,
         readinessSaid:
-          readiness.includes('Choose a model to start') && readiness.includes('WebMarker Extensions needs a model to chat.'),
+          readiness.includes('Choose a model to start') &&
+          readiness.includes('WebMarker Extensions needs a model to chat.'),
         coachMark,
         nextWaits,
         laterOff,

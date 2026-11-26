@@ -40,7 +40,12 @@ async function show(id: string, message: string, tabId: number | undefined): Pro
   if (!globalThis.chrome?.notifications) return;
   if (tabId !== undefined) tabOfNotification.set(id, tabId);
   await chrome.notifications
-    .create(id, { type: 'basic', iconUrl: chrome.runtime.getURL('/icon-128.png'), title: 'WebMarker Extensions', message })
+    .create(id, {
+      type: 'basic',
+      iconUrl: chrome.runtime.getURL('/icon-128.png'),
+      title: 'WebMarker Extensions',
+      message,
+    })
     .catch(() => undefined);
 }
 

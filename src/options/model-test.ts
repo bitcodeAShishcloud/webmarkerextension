@@ -32,7 +32,13 @@ export async function testModel(
   whole: boolean,
 ): Promise<ModelTest> {
   const stored = provider.models.find(m => m.name === modelName);
-  const spec = { kind: provider.kind, modelName, apiKey, baseUrl: provider.baseUrl, maxOutputTokens: stored?.overrides?.maxOutput };
+  const spec = {
+    kind: provider.kind,
+    modelName,
+    apiKey,
+    baseUrl: provider.baseUrl,
+    maxOutputTokens: stored?.overrides?.maxOutput,
+  };
   const at = new Date().toISOString();
   const api = await readModelInfo(spec);
   const patch: ModelTest['patch'] = { fromApi: api ? { ...api, at } : undefined };

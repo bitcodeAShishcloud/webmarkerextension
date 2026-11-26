@@ -208,7 +208,14 @@ describe('the move', () => {
     expect(data['nb.whatsNew']).toEqual({ version: '0.3', dismissed: false });
 
     const names = (await listShortcuts()).map(s => s.name).sort();
-    expect(names).toEqual(['daily-news-digest', 'explore-ai-papers', 'follow-us-on-x-twitter', 'prompt-1', 'star-us-on-github', 'summarize']);
+    expect(names).toEqual([
+      'daily-news-digest',
+      'explore-ai-papers',
+      'follow-us-on-x-twitter',
+      'prompt-1',
+      'star-us-on-github',
+      'summarize',
+    ]);
 
     const left = Object.keys(data)
       .filter(k => !k.startsWith('nb.'))
