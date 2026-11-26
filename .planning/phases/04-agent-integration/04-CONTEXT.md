@@ -1,7 +1,7 @@
 # Phase 4: Agent Integration - Context
 
 **Gathered:** 2026-10-31
-**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset, colour theme and all-white canvas decisions added)
+**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset, colour theme, all-white and warm-gray canvas decisions added)
 **Status:** Ready for planning
 
 <domain>
@@ -16,6 +16,8 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 **Added scope (2026-11-26, colour theme):** Switch the extension UI to a Claude.ai-like palette: `#FFFFFF` background and `#C15F3C` terracotta accent (the user explicitly asked for "seminila like claude.ai"). The logo artwork is explicitly **not** part of this change.
 
 **Added scope (2026-11-26, all-white canvas):** Make every background pure `#FFFFFF` in both light and dark — canvas, page background, cards/surfaces and the welcome/new-chat wave fields — with dark text and the same terracotta accent, "same as Claude.ai". The logo artwork files stay untouched; only the CSS backgrounds that use blue/navy images or gradients change.
+
+**Added scope (2026-11-26, warm-gray canvas):** Replace the pure-white canvas with **#B1ADA1** across the whole UI in both themes — canvas, page background and cards/surfaces — keeping dark text, terracotta brand accent and Claude.ai-like feel. This supersedes D-25's `#FFFFFF` background decision; D-26's white background rules become #B1ADA1.
 
 **Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing the logo artwork files, deleting brand image files.
 
@@ -65,6 +67,13 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 - **D-26:** Replace every blue/navy background treatment with white or a very subtle terracotta tint: `.nb-wave`, `.dark .nb-wave`, `.nb-start`, `.dark .nb-start`, `.dark .nb-field` in `src/ui/index.css`. The blue `#f6fcff` field and the `panel-wave.png`/`wave.jpg` image backgrounds must no longer produce blue areas; a faint terracotta wash is acceptable, but #FFFFFF is the base. — **Reversibility:** reversible
 - **D-27:** Brand image **files** stay byte-identical (D-22 still holds) — including `panel-wave.png` and `wave.jpg`. Stop referencing them as page backgrounds rather than deleting or editing them. Logo artwork unchanged. — **Reversibility:** reversible
 - **D-28:** Keep the terracotta accent family and WCAG AA contrast from D-19/D-20; borders stay #B1ADA1. No change to `--nb-auto` amber. — **Reversibility:** reversible
+
+### Warm-gray canvas (2026-11-26, supersedes D-25/D-26)
+- **D-29:** This change is added to the existing Phase 4 as another new plan (add-on pattern); no new phase, prior plans untouched. — **Reversibility:** reversible
+- **D-30:** **Every background becomes `#B1ADA1`** (RGB 177, 173, 161) in both `:root` and `.dark`: `--nb-canvas`, `--nb-bg` and `--nb-surface`. This supersedes D-25's white canvas and D-26's white background rules. Dark text stays (`--nb-fg` 15 27 45 = #0F1B2D, 7.705:1 on the new canvas). `color-scheme: light` stays in both themes. — **Reversibility:** reversible
+- **D-31:** Contrast on the darker canvas requires derived shades (measured): `--nb-muted` becomes **#443E38** (68 62 56, 4.700:1); `--nb-link` becomes **#6E2E17** (110 46 23, 4.531:1) in both themes; `--nb-border` becomes **#5F5B53** (95 91 83, 3.012:1) so borders remain visible against the same-coloured canvas. Brand accent `--nb-accent` stays **#C15F3C** (193 95 60) for fills/focus only — on #B1ADA1 it measures 1.884:1 and must NOT be used as text. Use `--nb-accent-strong` #A8492D (168 73 45) only behind white text; the darker #5E2711 is available if a text shade is needed. Keep `--nb-auto` amber. — **Reversibility:** reversible
+- **D-32:** The five background rules from D-26 (`.nb-wave`, `.dark .nb-wave`, `.nb-start`, `.dark .nb-start`, `.dark .nb-field`) resolve to `background: rgb(var(--nb-canvas));` — now #B1ADA1. No image backgrounds or blue/navy/white gradients. Brand image FILES stay byte-identical per D-27. — **Reversibility:** reversible
+- **D-33:** Keep the Claude.ai-like feel: system sans UI font, serif answers, warm gray canvas, dark text, terracotta accent. No logo or asset edits, no new dependency, no file/folder rename, no version bump, no `dist/**` hand-edits. — **Reversibility:** reversible
 
 ### Claude's Discretion
 - Exact casing of the package name (`webmarker-extensions` in kebab-case) and zip filename (`webmarker-extensions-<version>.zip`).
