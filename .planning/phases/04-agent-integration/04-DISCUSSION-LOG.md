@@ -3,9 +3,9 @@
 > **Audit trail only.** Do not use as input to planning, research, or execution agents.
 > Decisions are captured in CONTEXT.md — this log preserves the alternatives considered.
 
-**Date:** 2026-11-19
-**Phase:** 4-agent-integration (rebrand scope added to completed phase)
-**Areas discussed:** Phase placement, exact name, rename depth, external links, website link, upgrade fixtures, social links, privacy docs, planning docs
+**Date:** 2026-11-19; logo session 2026-11-26
+**Phase:** 4-agent-integration (rebrand and logo scope added to completed phase)
+**Areas discussed:** Phase placement, exact name, rename depth, external links, website link, upgrade fixtures, social links, privacy docs, planning docs; logo placement, logo scope, icon design, source image, wave assets, icon sizes
 
 ---
 
@@ -99,6 +99,55 @@
 
 **User's choice:** Rename product name inside `.planning/` documents too.
 
+## Logo — Phase Placement (2026-11-26)
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| New Phase 5 | Separate visual-branding phase | |
+| Add to existing Phase 4 | New plan in Phase 4, like the rebrand | ✓ |
+| No GSD artifacts | Direct asset replacement | |
+
+**User's choice:** Add to existing Phase 4.
+
+## Logo — Scope
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Extension icon + UI branding | icon-32/128 plus horizontal brand logo | ✓ |
+| Extension icon only | Toolbar/favicon only | |
+| UI branding only | Leave toolbar icon alone | |
+
+**User's choice:** Extension icon + UI branding.
+
+## Logo — Icon Design
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| W mark small, full lockup large | W mark in 32/128 icons; W + wordmark + tagline in UI logo | ✓ |
+| Full lockup everywhere | All sizes include the text | |
+| W mark everywhere | No wordmark or tagline | |
+
+**User's choice:** W mark for small icons, full lockup for larger UI branding.
+
+## Logo — Source Image
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Use attached `logo (1).png`, no repo copy | Derive assets from the supplied file | ✓ |
+| Also copy source into repo | Commit original PNG too | |
+| Different file | Wait for another path | |
+
+**User's choice:** Use the attached image; do not commit the source.
+
+## Logo — Wave Assets and Icon Sizes
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Keep wave backgrounds / keep 32+128 only | Decorative gradients unchanged; no new manifest icons | ✓ |
+| Recolor waves / add 16+48 | Broader visual refresh | |
+
+**User's choice:** Keep decorative wave assets unchanged; keep only 32 and 128 icon sizes.
+
 ## Readiness
 
 | Option | Description | Selected |
@@ -106,7 +155,7 @@
 | Ready — write CONTEXT.md | Capture all decisions | ✓ |
 | Explore more gray areas | Continue asking | |
 
-**User's choice:** Ready.
+**User's choice:** Ready (both sessions).
 
 ## the agent's Discretion
 
@@ -114,6 +163,8 @@
 - No version bump as part of the rebrand.
 - Whether product-mentioning source comments are updated for consistency.
 - Wording of the note explaining why upgrade fixtures retain "Nanobrowser".
+- Exact crop/padding and background treatment for the W-mark icons.
+- Image tooling used to derive assets — ask before adding a dependency.
 
 ## Deferred Ideas
 

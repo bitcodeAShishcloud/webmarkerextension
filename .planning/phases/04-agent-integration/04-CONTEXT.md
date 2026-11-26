@@ -1,7 +1,7 @@
 # Phase 4: Agent Integration - Context
 
 **Gathered:** 2026-10-31
-**Updated:** 2026-11-19 (rebrand decisions added)
+**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset decisions added)
 **Status:** Ready for planning
 
 <domain>
@@ -11,7 +11,9 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 
 **Added scope (2026-11-19):** Rebrand the product everywhere from "Nanobrowser" to **WebMarker Extensions** — user-visible strings, documentation, package/manifest metadata and external links. Internal identifiers stay unchanged so existing browser storage, CSS and messaging keep working. This is a string/metadata change, not a new capability.
 
-**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump.
+**Added scope (2026-11-26):** Replace the extension's visual identity with the user-supplied **WebMaker logo**: toolbar/favicon icons and the UI's horizontal brand logo. Asset contents change; asset paths and filenames stay the same. This is a visual asset change, not a new capability.
+
+**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing decorative wave backgrounds.
 
 </domain>
 
@@ -37,11 +39,20 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 - **D-10:** The upgrade-test fixtures `fixtures/upgrade/old-manifest.json` and `fixtures/upgrade/old-storage.json` keep the name "Nanobrowser" — they intentionally simulate the *old* version being upgraded from. Add a short comment or plan note explaining why, so a later reader does not "fix" them. — **Reversibility:** reversible
 - **D-11:** PRIVACY.md changes only the product name; the PostHog/analytics and daily-count statements remain as written because the code still contains those paths. — **Reversibility:** reversible
 
+### Logo — placement and source (2026-11-26)
+- **D-12:** The logo change is added to the existing Phase 4 as another new plan (as D-05 did for the rebrand); no new phase is created. Previously shipped plans stay untouched. — **Reversibility:** reversible
+- **D-13:** Source artwork is the user-supplied file `C:/Users/shesh/Downloads/logo (1).png` — a stylized blue/purple **W** mark above the wordmark **WebMaker** and the tagline **"We Build Your Web"**. Use it as the source for all derived assets. Do **not** copy the source file into the repository; only the derived product assets are committed. — **Reversibility:** reversible
+- **D-14:** Scope covers both the extension icon and UI branding: replace `public/icon-32.png`, `public/icon-128.png` (used by `LogoMark` at small sizes and declared in the manifest) and `public/brand/logo-horizontal.png` (used by `Logo` in the UI). Keep the exact same paths and filenames per D-07. — **Reversibility:** reversible
+- **D-15:** Icon sizes get the **W mark only** (crop the stylized W from the source; the wordmark and tagline are unreadable at 32 px). Larger UI branding (`logo-horizontal.png`) keeps the **full lockup** — W mark + "WebMaker" wordmark + "We Build Your Web" tagline — so the brand is recognizable in the side panel/welcome/options. — **Reversibility:** reversible
+- **D-16:** Keep decorative background assets `public/brand/panel-wave.png` and `public/brand/wave.jpg` unchanged — they are gradients, not logos. — **Reversibility:** reversible
+- **D-17:** Keep the manifest icon sizes as-is: **32 and 128 only**. Do not add 16/48 entries or new PNG files. — **Reversibility:** reversible
+
 ### Claude's Discretion
 - Exact casing of the package name (`webmarker-extensions` in kebab-case) and zip filename (`webmarker-extensions-<version>.zip`).
 - Keep the manifest version at `0.3.0` — no version bump as part of the rebrand.
 - Whether individual source comments that merely mention the old name are updated for consistency or left alone; visible strings and documentation must be updated.
 - Comment wording that explains why upgrade fixtures retain "Nanobrowser".
+- Exact crop/padding and transparent-vs-solid background for the W-mark icons, and which image tooling to use — but **ask before adding a dependency** (AGENTS.md); prefer tooling already present or an agent-side image edit.
 
 ### Folded Todos
 None.
@@ -71,6 +82,13 @@ None.
 - `src/llm/providers.ts` — `X-Title` header and `HTTP-Referer` sent to providers
 - `src/ui/protocol.ts` — comment naming the product
 
+### Logo and brand assets
+- `C:/Users/shesh/Downloads/logo (1).png` — user-supplied source artwork (outside the repo; do not commit the source)
+- `public/icon-32.png`, `public/icon-128.png` — manifest/toolbar icons; replace contents with the W mark
+- `public/brand/logo-horizontal.png` — UI horizontal logo; replace with the full WebMaker lockup
+- `src/ui/icons.tsx` — `LogoMark` (`/icon-128.png`) and `Logo` (`/brand/logo-horizontal.png`) components that consume the assets
+- `public/brand/panel-wave.png`, `public/brand/wave.jpg` — decorative backgrounds, explicitly unchanged (D-16)
+
 ### GitHub and fixture surfaces
 - `.github/ISSUE_TEMPLATE/bug_report.yml`, `.github/ISSUE_TEMPLATE/feature_request.yml`, `.github/ISSUE_TEMPLATE/config.yml`, `.github/FUNDING.yml`
 - `fixtures/upgrade/old-manifest.json`, `fixtures/upgrade/old-storage.json` — intentionally keep "Nanobrowser"
@@ -87,17 +105,20 @@ None.
 ### Reusable Assets
 - `src/ui/links.ts` — single `websiteUrl(path, place)` helper; repointing it updates every help/About link at once
 - `src/ui/i18n.ts` + three locale JSON catalogues — all user-visible copy lives in catalogues, so renaming the product is a catalogued string edit rather than scattered JSX text
+- `src/ui/icons.tsx` — `LogoMark` renders `/icon-128.png` at ~20 px (so the W mark must read at small size); `Logo` renders `/brand/logo-horizontal.png` at ~28 px height (room for the full lockup)
 - `wxt.config.ts` — generates `dist/manifest.json` from `package.json` and `public/_locales/`; no hand-editing of built output
 
 ### Established Patterns
 - Product strings are localised in `src/ui/locales/*.json` and `public/_locales/*/messages.json` — keep all three languages in lockstep
 - Generated output (`dist/**`, `.wxt/**`) is never edited; rebuild after changes
-- AGENTS.md requires asking before renaming files/folders — this rebrand explicitly excludes file/folder renames
+- AGENTS.md requires asking before renaming files/folders — this rebrand explicitly excludes file/folder renames, so logo work must replace asset contents at the same paths
+- Asset files under `public/` are copied verbatim into `dist/` at build time
 
 ### Integration Points
 - `package.json` name/repository feed the built manifest and `pnpm zip` filename
 - `src/llm/providers.ts` sends `X-Title` and `HTTP-Referer` to third-party providers — renaming those values changes what providers see
 - Upgrade fixtures are compared against stored data in upgrade tests — they must retain the old name
+- The manifest declares `icon-32.png` and `icon-128.png` only; Chrome draws the toolbar icon from these, so the crop must be legible at 32 px
 
 </code_context>
 
@@ -107,14 +128,16 @@ None.
 - Fork URL to use everywhere: `https://github.com/bitcodeAShishcloud/webmarkerextension`
 - About row label: `github.com/bitcodeAShishcloud/webmarkerextension`
 - Package name: `webmarker-extensions`; zip: `webmarker-extensions-<version>.zip`
+- Source logo: `C:/Users/shesh/Downloads/logo (1).png` — W mark + "WebMaker" + "We Build Your Web"; W mark for icons, full lockup for UI branding
 - The user's words: "pura jagah name change kr ke webmarker extensions krna hai" — interpreted as everywhere visible/documented, with internal identifiers deliberately excluded per D-07.
+- The user's words: "use this for logo of this extention" — the attached image is authoritative; no alternative artwork requested.
 
 </specifics>
 
 <deferred>
 ## Deferred Ideas
 
-None — discussion stayed within the rebrand scope.
+None — discussion stayed within the rebrand and logo scope.
 
 ### Reviewed Todos (not folded)
 None.
@@ -123,4 +146,4 @@ None.
 
 ---
 *Phase: 04-agent-integration*
-*Context gathered: 2026-10-31; rebrand decisions added 2026-11-19*
+*Context gathered: 2026-10-31; rebrand decisions added 2026-11-19; logo decisions added 2026-11-26*
