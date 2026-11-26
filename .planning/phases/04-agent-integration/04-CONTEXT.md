@@ -1,7 +1,7 @@
 # Phase 4: Agent Integration - Context
 
 **Gathered:** 2026-10-31
-**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset and colour theme decisions added)
+**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset, colour theme and all-white canvas decisions added)
 **Status:** Ready for planning
 
 <domain>
@@ -15,7 +15,9 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 
 **Added scope (2026-11-26, colour theme):** Switch the extension UI to a Claude.ai-like palette: `#FFFFFF` background and `#C15F3C` terracotta accent (the user explicitly asked for "seminila like claude.ai"). The logo artwork is explicitly **not** part of this change.
 
-**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing decorative wave backgrounds, changing the logo artwork.
+**Added scope (2026-11-26, all-white canvas):** Make every background pure `#FFFFFF` in both light and dark — canvas, page background, cards/surfaces and the welcome/new-chat wave fields — with dark text and the same terracotta accent, "same as Claude.ai". The logo artwork files stay untouched; only the CSS backgrounds that use blue/navy images or gradients change.
+
+**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing the logo artwork files, deleting brand image files.
 
 </domain>
 
@@ -56,6 +58,13 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 - **D-21:** Keep the existing dark-mode palette structure and the `color-scheme` switch; change only its accent-family tokens to terracotta so the theme remains coherent in dark mode. — **Reversibility:** reversible
 - **D-22:** Do **not** touch the logo artwork or brand images — the user explicitly chose "extension UI theme only". `public/icon-32.png`, `public/icon-128.png`, `public/brand/logo-horizontal.png`, `panel-wave.png` and `wave.jpg` stay byte-identical. — **Reversibility:** reversible
 - **D-23:** Use **#B1ADA1** (RGB 177, 173, 161) for borders and dividers — `--nb-border` in the light theme — as a soft warm gray matching the Claude.ai-like palette. Keep the dark theme's darker border token; do not use #B1ADA1 for text (insufficient contrast on white) or for surfaces. — **Reversibility:** reversible
+
+### All-white canvas (2026-11-26)
+- **D-24:** This change is added to the existing Phase 4 as another new plan (add-on pattern from D-05/D-12/D-18); no new phase, prior plans untouched. — **Reversibility:** reversible
+- **D-25:** **Every background becomes `#FFFFFF`** in both themes: `--nb-canvas`, `--nb-bg` and `--nb-surface` (cards) in `:root` and `.dark` are all `255 255 255`. Text stays dark (`--nb-fg` 15 27 45, muted 91 107 130) in both, so the result reads like Claude.ai — white canvas, dark text, terracotta accent. Keep `color-scheme: light` in both so native controls do not render dark against white. — **Reversibility:** reversible
+- **D-26:** Replace every blue/navy background treatment with white or a very subtle terracotta tint: `.nb-wave`, `.dark .nb-wave`, `.nb-start`, `.dark .nb-start`, `.dark .nb-field` in `src/ui/index.css`. The blue `#f6fcff` field and the `panel-wave.png`/`wave.jpg` image backgrounds must no longer produce blue areas; a faint terracotta wash is acceptable, but #FFFFFF is the base. — **Reversibility:** reversible
+- **D-27:** Brand image **files** stay byte-identical (D-22 still holds) — including `panel-wave.png` and `wave.jpg`. Stop referencing them as page backgrounds rather than deleting or editing them. Logo artwork unchanged. — **Reversibility:** reversible
+- **D-28:** Keep the terracotta accent family and WCAG AA contrast from D-19/D-20; borders stay #B1ADA1. No change to `--nb-auto` amber. — **Reversibility:** reversible
 
 ### Claude's Discretion
 - Exact casing of the package name (`webmarker-extensions` in kebab-case) and zip filename (`webmarker-extensions-<version>.zip`).
