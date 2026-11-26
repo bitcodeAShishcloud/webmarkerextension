@@ -3,23 +3,24 @@
 @tailwind utilities;
 
 /*
- * The brand (the Nanobrowser brandbook). Primary #0073DC and sky #19C2FF on a pale sky canvas in light; a deep navy
- * canvas in dark. Text colours meet WCAG AA on the canvas, the surfaces and the cards. Fonts are the system's: sans for
- * the interface, and the system's serif for answers, as in Claude in Chrome's side panel.
+ * The brand: a terracotta palette on a pure white canvas in light; a deep navy canvas in dark. The exact #C15F3C
+ * accent anchors the brand, with darker terracotta shades for text so it meets WCAG AA on the canvas, the surfaces
+ * and the cards. Fonts are the system's: sans for the interface, and the system's serif for answers, as in Claude
+ * in Chrome's side panel.
  */
 :root {
-  --nb-canvas: 250 251 253;
+  --nb-canvas: 255 255 255;
   --nb-bg: 255 255 255;
   --nb-fg: 15 27 45;
   --nb-muted: 91 107 130;
-  --nb-border: 214 227 240;
+  --nb-border: 177 173 161;
   --nb-surface: 234 244 252;
-  --nb-accent: 0 115 220;
-  --nb-accent-strong: 0 95 184;
-  --nb-sky: 25 194 255;
-  --nb-link: 0 104 201;
+  --nb-accent: 193 95 60;
+  --nb-accent-strong: 168 73 45;
+  --nb-sky: 217 136 100;
+  --nb-link: 160 69 41;
   --nb-auto: 180 83 9;
-  --nb-shadow: 30 70 150;
+  --nb-shadow: 120 60 40;
   color-scheme: light;
 }
 
@@ -49,7 +50,7 @@ body {
   @apply bg-nb-canvas font-sans text-sm leading-normal text-nb-fg antialiased;
 }
 
-/* Checkboxes, radios and sliders in the brand's blue. */
+/* Checkboxes, radios and sliders in the brand's terracotta. */
 input,
 progress {
   accent-color: rgb(var(--nb-accent));
