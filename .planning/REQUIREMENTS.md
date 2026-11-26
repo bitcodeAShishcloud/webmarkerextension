@@ -1,4 +1,4 @@
-# Requirements: Nanobrowser (Custom Model Support)
+# Requirements: WebMarker Extensions (Custom Model Support)
 
 **Defined:** 2026-10-30
 **Core Value:** The agent must run correctly on a model the user configures themselves — tool calls work, and the context and output limits the user states are respected.

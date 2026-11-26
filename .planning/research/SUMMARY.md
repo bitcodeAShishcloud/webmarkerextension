@@ -1,13 +1,13 @@
 # Project Research Summary
 
-**Project:** Nanobrowser (custom OpenAI-compatible model support)
+**Project:** WebMarker Extensions (custom OpenAI-compatible model support)
 **Domain:** OpenAI-compatible custom model support in a browser-extension AI agent (Chrome/Edge MV3)
 **Researched:** 2026-10-30
 **Confidence:** HIGH
 
 ## Executive Summary
 
-Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary endpoints through the Vercel AI SDK's `@ai-sdk/openai` provider (`createOpenAI({ baseURL, apiKey }).chat(modelId)`), and already stores per-model overrides (`contextWindow`, `maxOutput`, `vision`) on `ModelEntry`. The milestone is therefore **wiring, not new infrastructure**: the data model, profile precedence chain (`overrides → tested → fromApi → catalogue → defaults`), probe machinery (`readModelInfo`, `testConnection`, `probeAsk`), and run-time resolver (`resolveModel`) all exist. No new dependencies are required, and the extension's `host_permissions: ['<all_urls>']` already permits fetch to user-supplied base URLs.
+WebMarker Extensions already speaks the OpenAI Chat Completions protocol for arbitrary endpoints through the Vercel AI SDK's `@ai-sdk/openai` provider (`createOpenAI({ baseURL, apiKey }).chat(modelId)`), and already stores per-model overrides (`contextWindow`, `maxOutput`, `vision`) on `ModelEntry`. The milestone is therefore **wiring, not new infrastructure**: the data model, profile precedence chain (`overrides → tested → fromApi → catalogue → defaults`), probe machinery (`readModelInfo`, `testConnection`, `probeAsk`), and run-time resolver (`resolveModel`) all exist. No new dependencies are required, and the extension's `host_permissions: ['<all_urls>']` already permits fetch to user-supplied base URLs.
 
 The headline gap is user-facing: per-model `MAX_TOKENS`/`CONTEXT_WINDOW`/vision overrides exist in the data model but have no UI, and there is no per-provider enable/disable toggle or base-URL normalization for custom endpoints. Closing that gap requires four ordered phases: Settings UI & validation → profile wiring & validation → probe robustness → agent integration. The principal risks are (a) user-entered limits silently overriding safer server-reported values and breaking compaction, (b) fixed probe caps causing false "no tool calling" verdicts on reasoning models, and (c) mis-gated vision sending screenshots to text-only models. Each has a concrete, low-cost mitigation already identified in the research.
 
@@ -128,7 +128,7 @@ Phases with standard patterns (skip research-phase):
 | Area | Confidence | Notes |
 |------|------------|-------|
 | Stack | HIGH | Verified against installed versions (`ai@7.0.150`, `@ai-sdk/openai@4.0.101`, `zod@4.6.7`) and official AI SDK docs; no new deps. |
-| Features | HIGH | Grounded in Nanobrowser's existing code plus Open WebUI docs and ecosystem survey; table stakes consistent across products. |
+| Features | HIGH | Grounded in WebMarker Extensions's existing code plus Open WebUI docs and ecosystem survey; table stakes consistent across products. |
 | Architecture | HIGH | Directly mapped to existing modules and data flows in `src/store`, `src/llm`, `src/extension`, `src/options`. |
 | Pitfalls | HIGH | Each pitfall cites concrete file:line locations and has a low-cost mitigation; several are directly reproducible. |
 

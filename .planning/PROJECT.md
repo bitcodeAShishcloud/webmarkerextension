@@ -1,12 +1,12 @@
-# Nanobrowser
+# WebMarker Extensions
 
 ## What This Is
 
-Nanobrowser is a Chrome/Edge extension that automates the web with a single in-browser AI agent: a deterministic browser-control layer (observe, act, report) sits underneath an agent loop that drives it through the Vercel AI SDK. Users bring their own model provider keys, and the agent works on the tabs they allow, under one of three permission modes. This milestone focuses on letting users add and run their own OpenAI-compatible models (custom base URL, key, model id, max output tokens, context window) instead of only the built-in providers.
+WebMarker Extensions is a Chrome/Edge extension that automates the web with a single in-browser AI agent: a deterministic browser-control layer (observe, act, report) sits underneath an agent loop that drives it through the Vercel AI SDK. Users bring their own model provider keys, and the agent works on the tabs they allow, under one of three permission modes. This milestone focuses on letting users add and run their own OpenAI-compatible models (custom base URL, key, model id, max output tokens, context window) instead of only the built-in providers.
 
 ## Core Value
 
-The agent must run correctly on a model the user configures themselves — tool calls work, and the context and output limits the user states are respected — so Nanobrowser is not locked to a fixed provider list.
+The agent must run correctly on a model the user configures themselves — tool calls work, and the context and output limits the user states are respected — so WebMarker Extensions is not locked to a fixed provider list.
 
 ## Requirements
 

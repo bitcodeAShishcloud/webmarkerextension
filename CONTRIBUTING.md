@@ -1,6 +1,6 @@
-# Contributing to Nanobrowser
+# Contributing to WebMarker Extensions
 
-Thank you for your interest in contributing to Nanobrowser! Every contribution helps make it better for everyone.
+Thank you for your interest in contributing to WebMarker Extensions! Every contribution helps make it better for everyone.
 
 ## Quick start
 
@@ -24,7 +24,7 @@ Load the repository's `dist/` folder as an unpacked extension in Chrome or Edge 
 | Command               | What it does                                                 |
 | --------------------- | ------------------------------------------------------------ |
 | `pnpm build`          | Production build into `dist/`                                |
-| `pnpm zip`            | Production build, packed into `dist-zip/nanobrowser-<version>.zip` |
+| `pnpm zip`            | Production build, packed into `dist-zip/webmarker-extensions-<version>.zip` |
 | `pnpm type-check`     | TypeScript checks                                            |
 | `pnpm lint`           | ESLint, including the import rules between the parts of the code |
 | `pnpm test`           | Unit tests                                                   |
@@ -41,7 +41,7 @@ Before you open a pull request, make sure `pnpm prettier`, `pnpm lint`, `pnpm ty
 ### Reporting bugs
 
 - Search the existing issues first.
-- Include a clear description, the steps to reproduce, your environment (OS, browser and its version, Nanobrowser version), the provider and model you used, and screenshots if they help.
+- Include a clear description, the steps to reproduce, your environment (OS, browser and its version, WebMarker Extensions version), the provider and model you used, and screenshots if they help.
 - Never include API keys, passwords or other secrets.
 
 ### Suggesting enhancements

@@ -1,6 +1,6 @@
 # Pitfalls Research
 
-**Domain:** OpenAI-compatible custom model support in a Chrome MV3 AI web-automation agent (Nanobrowser)
+**Domain:** OpenAI-compatible custom model support in a Chrome MV3 AI web-automation agent (WebMarker Extensions)
 **Researched:** 2026-10-30
 **Confidence:** HIGH
 

@@ -9,7 +9,7 @@ last_mapped_at: 2026-10-30
 ## Directory Layout
 
 ```
-nanobrowser/
+webmarker-extensions/
 ├── entrypoints/            # Thin WXT entrypoints (HTML + bootstrap)
 │   ├── background.ts
 │   ├── sidepanel/

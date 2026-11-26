@@ -1,6 +1,6 @@
 # Technology Stack
 
-**Project:** Nanobrowser (custom OpenAI-compatible model support)
+**Project:** WebMarker Extensions (custom OpenAI-compatible model support)
 **Researched:** 2026-10-30
 **Confidence:** HIGH (verified against installed versions and official AI SDK docs)
 

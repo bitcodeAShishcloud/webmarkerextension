@@ -1,32 +1,25 @@
 <h1 align="center">
-    <img src="https://github.com/user-attachments/assets/294f9cdc-38ba-4cdc-beff-82fe78c9a023" width="100%" alt="Nanobrowser" /><br>
+    <img src="https://github.com/user-attachments/assets/294f9cdc-38ba-4cdc-beff-82fe78c9a023" width="100%" alt="WebMarker Extensions" /><br>
 </h1>
 
 <div align="center">
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/nanobrowser)
-[![Twitter](https://img.shields.io/badge/Twitter-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/nanobrowser_ai)
-[![Discord](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/NN3ABHggMK)
-[![DeepWiki][deepwiki-badge]](https://deepwiki.com/nanobrowser/nanobrowser)
-[![Sponsor](https://img.shields.io/badge/Sponsor-ff69b4?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/alexchenzl)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bitcodeAShishcloud/webmarkerextension)
 
 </div>
 
-<!-- The DeepWiki mark is inlined in the badge: deepwiki.com refuses requests that do not come from a browser. -->
 
-[deepwiki-badge]: https://img.shields.io/badge/DeepWiki-1E293B?style=for-the-badge&logo=data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAC8AAAAvCAMAAABE%2BWOeAAAAY1BMVEX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2BDm4mgAAAAIXRSTlMA%2FwAAL%2BkAAGbYIwAA0xpL8fgUwceTXOO2qqCKggVxOgugMgR1AAABkElEQVR42uWW2ZasIAxF5ahgyeiEs9b%2Ff2XrtRzK6xKfu%2FOIGyTJSYLn7UY5wL3H5sNmlYZ4Rguo2hBiGgHqpinSdqJnC7veuYNjkGSzPAK7xVmQJeRgSaX8u6vHJTmZTO8CE4Rn%2FhXTX8OLB3w4sjWREOdsXPCkwJIZrnNSB9%2BiuuITDS4Y4npOZNlSOPhJeKMKivVDqdmudJpW5Mq%2BNJLpXYW%2B6hLisrDo6S7%2BtDHbTbKiLq92WHwVV76sTiUGvNsLPjo67cGLJu9elnE6%2F7Bx8VNq3kXHP2v%2B%2Fxo%2F8%2FOpWwyon7l5j%2B2ZR%2BXkGfSItRBT6eAFgipJ6njRCgaHv1CFWdpJOsUT2tzygN3i8Rq0rcxd%2FAXT0qkHksUfVdO%2BMG75DD270zORg43kKkNTqIM8r%2Fhu9hqRXPrdeKywK776dxyFmtpwaSl31KPRWLPSW%2BBBPxG7DOnf6p8X82g4FV9p2f10VI05dpoUrunLx3zTYfBkZvOPVqR2DNO9ZtI2Md0bjx8QFL3%2F5DFwcMN58R%2BkZhV56KabXwAAAABJRU5ErkJggg%3D%3D
 
-## 🌐 Nanobrowser
 
-Nanobrowser is an open-source AI agent that works in your own browser. Tell it a task in the side panel; it reads the pages, clicks, types and moves between tabs to get it done, and it asks you before it submits, sends, deletes or uploads anything.
+## 🌐 WebMarker Extensions
 
-⬇️ Get [Nanobrowser from the Chrome Web Store](https://chromewebstore.google.com/detail/nanobrowser/imbddededgmcgfhfpcjmijokokekbkal) for free
+WebMarker Extensions is an open-source AI agent that works in your own browser. Tell it a task in the side panel; it reads the pages, clicks, types and moves between tabs to get it done, and it asks you before it submits, sends, deletes or uploads anything.
 
-👏 Join the community on [Discord](https://discord.gg/NN3ABHggMK) | [X](https://x.com/nanobrowser_ai)
+⬇️ Build from source (see "Build from Source" below) — no store listing yet.
 
-❤️ Support the project by [sponsoring us](https://github.com/sponsors/alexchenzl). Every contribution helps keep Nanobrowser free and open source.
+👏 Contributions welcome — see CONTRIBUTING.md.
 
-## 🔥 Why Nanobrowser?
+## 🔥 Why WebMarker Extensions?
 
 - **Free.** No subscription and no hidden costs. Use your own API key or a local model, and pay only for what you use.
 - **Private.** Everything runs in your browser. Your keys stay in the browser and go only to their own provider. Pages go only to the model you choose. A daily count of users and usage counts are sent without an ID and never include your pages or sites; see [PRIVACY.md](PRIVACY.md).
@@ -51,7 +44,7 @@ Nanobrowser is an open-source AI agent that works in your own browser. Tell it a
 ## 🌐 Browser Support
 
 - **Supported:** Chrome and Edge.
-- **Not supported:** Firefox, Safari, and other Chromium-based browsers (Opera, Arc, Brave and others). Nanobrowser may work in them, but they are not tested.
+- **Not supported:** Firefox, Safari, and other Chromium-based browsers (Opera, Arc, Brave and others). WebMarker Extensions may work in them, but they are not tested.
 
 ## 🛡️ You decide what the agent may do
 
@@ -95,11 +88,11 @@ You can also set a site to **Allow** (go ahead in both modes), **Ask** (ask in b
 
 ## 🚀 Quick Start
 
-1. **Install it** from the [Chrome Web Store](https://chromewebstore.google.com/detail/nanobrowser/imbddededgmcgfhfpcjmijokokekbkal): click `Add to Chrome` and confirm. In Edge, first allow extensions from other stores when Edge asks.
+1. **Build from source** (see "Build from Source" below) and load the `dist` folder as an unpacked extension in Chrome or Edge.
 
 2. **Set it up:** the welcome page opens and helps you connect a cloud provider or a local model. You can also do it later in Settings → Providers.
 
-3. **Use it:** click the Nanobrowser icon in the toolbar, or press `Alt+Shift+N`, to open the side panel on the current tab.
+3. **Use it:** click the WebMarker Extensions icon in the toolbar, or press `Alt+Shift+N`, to open the side panel on the current tab.
 
 ## 🔧 Build from Source
 
@@ -108,8 +101,8 @@ You can also set a site to **Allow** (go ahead in both modes), **Ask** (ask in b
 2. **Clone and build:**
 
    ```bash
-   git clone https://github.com/nanobrowser/nanobrowser.git
-   cd nanobrowser
+   git clone https://github.com/bitcodeAShishcloud/webmarkerextension.git
+   cd webmarkerextension
    corepack enable # skip if pnpm 10 is already installed
    pnpm install
    pnpm build      # builds the extension into dist/
@@ -120,7 +113,7 @@ You can also set a site to **Allow** (go ahead in both modes), **Ask** (ask in b
    - Turn on `Developer mode` (top right).
    - Click `Load unpacked` and choose the `dist` folder.
 
-Then set it up and use it as in the Quick Start. To update, pull the latest source, run `pnpm build` again, and click the reload icon on the Nanobrowser card in the extensions page.
+Then set it up and use it as in the Quick Start. To update, pull the latest source, run `pnpm build` again, and click the reload icon on the WebMarker Extensions card in the extensions page.
 
 ## 🛠️ Development
 
@@ -148,23 +141,21 @@ The layer talks to the page only through Chrome's `chrome.debugger` API, and use
 
 Contributions of all kinds are welcome:
 
-- **Share prompts and use cases** on our [Discord server](https://discord.gg/NN3ABHggMK).
-- **Give feedback** on how Nanobrowser works for you, on [Discord](https://discord.gg/NN3ABHggMK) or in [GitHub Discussions](https://github.com/nanobrowser/nanobrowser/discussions).
+- **Share prompts and use cases** in [GitHub Discussions](https://github.com/bitcodeAShishcloud/webmarkerextension/discussions).
+- **Give feedback** on how WebMarker Extensions works for you, in [GitHub Discussions](https://github.com/bitcodeAShishcloud/webmarkerextension/discussions).
 - **Contribute code**: read [CONTRIBUTING.md](CONTRIBUTING.md), then open a pull request for a bug fix, a feature or the documentation.
 
 ## 🔒 Security
 
-If you find a security vulnerability, please **do not** disclose it in public issues, pull requests or discussions. Report it through a [GitHub Security Advisory](https://github.com/nanobrowser/nanobrowser/security/advisories/new), so it can be fixed before it is made public. See [SECURITY.md](SECURITY.md).
+If you find a security vulnerability, please **do not** disclose it in public issues, pull requests or discussions. Report it through a [GitHub Security Advisory](https://github.com/bitcodeAShishcloud/webmarkerextension/security/advisories/new), so it can be fixed before it is made public. See [SECURITY.md](SECURITY.md).
 
 ## 💬 Community
 
-- [Discord](https://discord.gg/NN3ABHggMK): chat with the team and the community
-- [X](https://x.com/nanobrowser_ai): updates and announcements
-- [GitHub Discussions](https://github.com/nanobrowser/nanobrowser/discussions): ideas and questions
+- [GitHub Discussions](https://github.com/bitcodeAShishcloud/webmarkerextension/discussions): ideas and questions
 
 ## 👏 Acknowledgments
 
-Nanobrowser builds on other great open-source projects:
+WebMarker Extensions builds on other great open-source projects:
 
 - [Puppeteer](https://github.com/puppeteer/puppeteer)
 - [Vercel AI SDK](https://github.com/vercel/ai)
@@ -175,4 +166,4 @@ Thanks to their creators and contributors.
 
 ## 📄 License
 
-Nanobrowser is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+WebMarker Extensions is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.

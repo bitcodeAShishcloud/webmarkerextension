@@ -1,8 +1,8 @@
 # Feature Research
 
-**Domain:** Custom OpenAI-compatible model support in a browser-extension AI agent (Nanobrowser)
+**Domain:** Custom OpenAI-compatible model support in a browser-extension AI agent (WebMarker Extensions)
 **Researched:** 2026-10-30
-**Confidence:** HIGH (grounded in Nanobrowser's existing code + Open WebUI docs + ecosystem knowledge)
+**Confidence:** HIGH (grounded in WebMarker Extensions's existing code + Open WebUI docs + ecosystem knowledge)
 
 ## Feature Landscape
 
@@ -22,17 +22,17 @@ Features users assume exist. Missing these = product feels incomplete or unusabl
 | Vision auto-detection gating the screenshot tool | Vision support varies; sending images to a non-vision model errors | MEDIUM | Partial: `overrides.vision` + probe; milestone wires it through |
 | Masked API key display + clear/regenerate | Security baseline; keys never shown after save | LOW | Exists: `KeyField`, `KeyInput` |
 | Clear error messages on bad key/URL/model | Users debug by message; generic failures cause abandonment | LOW | Exists: `listProblem`, `result.error`, origin-refused fix |
-| Per-provider enable/disable toggle (without deleting) | Users switch between providers; preserving config matters | LOW | **Missing** in Nanobrowser; worth adding (Open WebUI has it) |
+| Per-provider enable/disable toggle (without deleting) | Users switch between providers; preserving config matters | LOW | **Missing** in WebMarker Extensions; worth adding (Open WebUI has it) |
 | Base URL normalization (trailing slash, `/v1` handling) | Users paste inconsistent URLs; failures look like broken providers | LOW | Partial: `openAICompatibleBaseUrl` handles ollama/lmstudio; custom endpoints use raw URL — add normalization |
 | Concurrency hygiene for local servers | Local servers crash under parallel requests | LOW | `maxConcurrent` exists in `ModelSpec`; not user-facing — keep internal |
 
 ### Differentiators (Competitive Advantage)
 
-Features that set the product apart. Not required, but valuable. Nanobrowser is well-positioned on several.
+Features that set the product apart. Not required, but valuable. WebMarker Extensions is well-positioned on several.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Auto-detect context window / max output from `/models` or vendor API | Removes the most error-prone manual step; Open WebUI/Continue require manual entry | MEDIUM | Nanobrowser already does `readModelInfo` (Anthropic, Gemini, Ollama, LM Studio, OpenAI-compatible `/models`); custom OpenAI-compat returns facts when present |
+| Auto-detect context window / max output from `/models` or vendor API | Removes the most error-prone manual step; Open WebUI/Continue require manual entry | MEDIUM | WebMarker Extensions already does `readModelInfo` (Anthropic, Gemini, Ollama, LM Studio, OpenAI-compatible `/models`); custom OpenAI-compat returns facts when present |
 | Auto-detect vision capability | Avoids wrong screenshot-tool gating | MEDIUM | `factsFrom` reads image modalities; probe fills gaps |
 | Auto-detect reasoning support + None acceptance | Drives reasoning-effort UI and wire format correctly per model | MEDIUM-HIGH | `probeAsk` + `capabilityFrom`; already implemented |
 | Auto-probe tool calling on add (not just on demand) | Catches incompatible models immediately instead of at first run | MEDIUM | Exists: `wholeTestOnAdd` for cloud endpoints |
@@ -56,7 +56,7 @@ Features that seem good but create problems.
 | Per-model API keys | "Different keys per model" | Complicates storage and UI; provider key is shared by all its models today | Keep one key per provider (decided) |
 | New `ProviderKind` variants | "Cleaner typing" | Breaks catalogue/profile/switch logic; not needed | Reuse `openai-compatible` (decided) |
 | Azure OpenAI support | "Enterprise customers" | Different auth/URL shape; deferred | Out of scope (decided) |
-| Local model download/load/unload management (server-side) | "Manage models in-app" | Nanobrowser is a client; managing weights is the server's job (Open WebUI does this for llama.cpp/LM Studio) | Point users to their server's UI; only chat via the endpoint |
+| Local model download/load/unload management (server-side) | "Manage models in-app" | WebMarker Extensions is a client; managing weights is the server's job (Open WebUI does this for llama.cpp/LM Studio) | Point users to their server's UI; only chat via the endpoint |
 | Storing model weights / running inference in-extension | "Offline use" | Impossible in MV3; wrong layer | Out of scope |
 | Cloud sync of providers/keys | "Sync across devices" | Keys must never leave the browser; sync risks leakage | Keep in `chrome.storage.local` only |
 | Export/import of API keys | "Backup convenience" | Security risk; keys are secrets | Never export keys (AGENTS.md) |
@@ -147,7 +147,7 @@ Features to defer until product-market fit is established.
 
 ## Competitor Feature Analysis
 
-| Feature | Open WebUI | Continue.dev / Lobe Chat | Nanobrowser (current) | Our Plan |
+| Feature | Open WebUI | Continue.dev / Lobe Chat | WebMarker Extensions (current) | Our Plan |
 |---------|------------|--------------------------|----------------------|----------|
 | Custom base URL + key | Yes | Yes | Yes | Keep |
 | Manual model ID entry | Yes (Model IDs allowlist) | Yes | Yes | Keep |
@@ -163,16 +163,16 @@ Features to defer until product-market fit is established.
 
 ## Sources
 
-- Nanobrowser codebase: `src/store/settings.ts` (`ModelEntry`, `ProfileOverrides`, `withBaseUrl`, `learnFacts`), `src/llm/profiles.ts` (`resolveProfile`, `probeAsk`), `src/llm/model-info.ts` (`factsFrom`, `readModelInfo`), `src/options/ProvidersSection.tsx`, `src/options/model-test.ts`
-- Nanobrowser `PROJECT.md` Active/Out of Scope sections
+- WebMarker Extensions codebase: `src/store/settings.ts` (`ModelEntry`, `ProfileOverrides`, `withBaseUrl`, `learnFacts`), `src/llm/profiles.ts` (`resolveProfile`, `probeAsk`), `src/llm/model-info.ts` (`factsFrom`, `readModelInfo`), `src/options/ProvidersSection.tsx`, `src/options/model-test.ts`
+- WebMarker Extensions `PROJECT.md` Active/Out of Scope sections
 - Open WebUI docs: OpenAI-compatible connections, `/models` verification failures, manual Model IDs, Provider dropdown, enable/disable toggles, protocol-oriented design (retrieved 2026-10-30)
 - Ecosystem knowledge: Lobe Chat, Chatbox, Cherry Studio, Continue.dev, LibreChat, AnythingLLM, Jan, LM Studio model configuration patterns (HIGH confidence for common features; MEDIUM for niche ones)
 
 Confidence notes:
 - Table stakes list: HIGH — consistent across all surveyed products.
-- Differentiators: MEDIUM-HIGH — Nanobrowser already implements most; the "manual override UI" gap is the main new surface.
+- Differentiators: MEDIUM-HIGH — WebMarker Extensions already implements most; the "manual override UI" gap is the main new surface.
 - Anti-features: HIGH — directly supported by PROJECT.md Out of Scope and AGENTS.md constraints.
 
 ---
-*Feature research for: custom OpenAI-compatible model support in Nanobrowser*
+*Feature research for: custom OpenAI-compatible model support in WebMarker Extensions*
 *Researched: 2026-10-30*

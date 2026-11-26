@@ -1,8 +1,8 @@
-# Roadmap: Nanobrowser
+# Roadmap: WebMarker Extensions
 
 ## Overview
 
-Nanobrowser already speaks the OpenAI Chat Completions protocol for arbitrary endpoints and already stores per-model overrides, so this milestone is wiring rather than new infrastructure: expose per-model limits and vision in Settings, wire them safely through profile resolution, harden the test probes, and verify end-to-end agent runs on a user-configured model.
+WebMarker Extensions already speaks the OpenAI Chat Completions protocol for arbitrary endpoints and already stores per-model overrides, so this milestone is wiring rather than new infrastructure: expose per-model limits and vision in Settings, wire them safely through profile resolution, harden the test probes, and verify end-to-end agent runs on a user-configured model.
 
 ## Phases
 

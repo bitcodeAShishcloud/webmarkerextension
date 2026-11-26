@@ -100,7 +100,7 @@ last_mapped_at: 2026-10-30
 
 **Build output:**
 - `pnpm build` -> `dist/` (unpacked extension)
-- `pnpm zip` -> `dist-zip/nanobrowser-<version>.zip` (no source maps)
+- `pnpm zip` -> `dist-zip/webmarker-extensions-<version>.zip` (no source maps)
 
 ## Environment Configuration
 

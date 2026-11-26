@@ -126,7 +126,7 @@ last_mapped_at: 2026-10-30
 - Safe modification: Change only with the `restore` unit tests (`src/agent/__tests__/restore.test.ts`) and the autorun restart scenarios.
 - Test coverage: `restore.test.ts` covers the table; integration-level restart coverage lives in autorun scenarios.
 
-**Upgrade from the old Nanobrowser (0.2):**
+**Upgrade from the old WebMarker Extensions (0.2):**
 - Files: `src/extension/upgrade.ts`, `src/store/legacy.ts`
 - Why fragile: One-time, idempotent-ish migration of providers, keys, prompts, blocked sites and analytics choice; old keys removed only after the record is stored. A half-stopped worker finishes on next start.
 - Safe modification: Keep the "nothing written twice" ordering; extend `upgrade.test.ts` for any new moved field.

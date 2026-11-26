@@ -1,6 +1,6 @@
 # Architecture Patterns
 
-**Domain:** Custom OpenAI-compatible model support in a Chrome/Edge MV3 AI web-automation extension (Nanobrowser)
+**Domain:** Custom OpenAI-compatible model support in a Chrome/Edge MV3 AI web-automation extension (WebMarker Extensions)
 **Researched:** 2026-10-30
 **Confidence:** HIGH
 
