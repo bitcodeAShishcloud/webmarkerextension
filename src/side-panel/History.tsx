@@ -86,7 +86,7 @@ export function HistoryDrawer({
   );
 }
 
-/** A run's status beside the date, when it is one to notice: working in blue, needs you in amber, never red. */
+/** A run's status beside the date, when it is one to notice: working in terracotta, needs you in amber, never red. */
 function statusClass(status: ConversationSummary['status']): string {
   if (status === 'running') return 'text-nb-link';
   if (status === 'awaiting_user' || status === 'interrupted') return 'text-amber-700 dark:text-amber-300';

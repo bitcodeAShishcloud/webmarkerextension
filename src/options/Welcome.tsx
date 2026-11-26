@@ -58,7 +58,7 @@ export function Welcome() {
             <li
               key={label}
               aria-current={i === step ? 'step' : undefined}
-              // Not clickable: the open step on a white pill with a soft blue ring and blue text.
+              // Not clickable: the open step on a white pill with a soft terracotta ring and terracotta text.
               className={`rounded-lg px-3 py-2 text-[15px] ${i === step ? 'bg-nb-bg font-medium text-nb-link ring-1 ring-nb-accent/30' : 'text-nb-muted'}`}>
               {i + 1}. {t(label)}
             </li>
