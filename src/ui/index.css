@@ -3,37 +3,37 @@
 @tailwind utilities;
 
 /*
- * The brand: a #C15F3C terracotta accent on a pure white canvas with dark text in both light and dark themes.
- * Darker terracotta shades keep link text at WCAG AA on the white canvas, the surfaces and the cards, while the
+ * The brand: a #C15F3C terracotta accent for fills and focus on a warm-gray #B1ADA1 canvas with #0F1B2D dark
+ * text in both light and dark themes. #443E38 muted text and #6E2E17 links meet WCAG AA on that canvas; the
  * system's sans face sets the interface and the system's serif sets answers, as in Claude in Chrome's side panel.
  */
 :root {
-  --nb-canvas: 255 255 255;
-  --nb-bg: 255 255 255;
+  --nb-canvas: 177 173 161;
+  --nb-bg: 177 173 161;
   --nb-fg: 15 27 45;
-  --nb-muted: 91 107 130;
-  --nb-border: 177 173 161;
-  --nb-surface: 255 255 255;
+  --nb-muted: 68 62 56;
+  --nb-border: 95 91 83;
+  --nb-surface: 177 173 161;
   --nb-accent: 193 95 60;
   --nb-accent-strong: 168 73 45;
   --nb-sky: 217 136 100;
-  --nb-link: 160 69 41;
+  --nb-link: 110 46 23;
   --nb-auto: 180 83 9;
   --nb-shadow: 120 60 40;
   color-scheme: light;
 }
 
 .dark {
-  --nb-canvas: 255 255 255;
-  --nb-bg: 255 255 255;
+  --nb-canvas: 177 173 161;
+  --nb-bg: 177 173 161;
   --nb-fg: 15 27 45;
-  --nb-muted: 91 107 130;
-  --nb-border: 40 58 88;
-  --nb-surface: 255 255 255;
+  --nb-muted: 68 62 56;
+  --nb-border: 95 91 83;
+  --nb-surface: 177 173 161;
   --nb-accent: 193 95 60;
-  --nb-accent-strong: 224 145 110;
+  --nb-accent-strong: 168 73 45;
   --nb-sky: 217 131 96;
-  --nb-link: 160 69 41;
+  --nb-link: 110 46 23;
   --nb-auto: 251 191 36;
   --nb-shadow: 0 8 24;
   color-scheme: light;
