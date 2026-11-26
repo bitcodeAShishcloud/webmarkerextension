@@ -65,33 +65,28 @@ h3 {
   @apply bg-nb-sky/30;
 }
 
-/* The decorative wave behind the welcome and microphone pages; a navy field in dark. */
+/* The decorative wave behind the welcome and microphone pages: a pure white field in both themes, with no
+   image-backed wave. */
 .nb-wave {
-  background:
-    url('/brand/wave.jpg') center top / cover no-repeat fixed,
-    rgb(var(--nb-canvas));
+  background: rgb(var(--nb-canvas));
 }
 .dark .nb-wave {
-  background: linear-gradient(140deg, #0b1730 0%, #0c1626 40%, #0a1220 70%, #0f1c34 100%) fixed;
+  background: rgb(var(--nb-canvas));
 }
 
-/* The panel's new-chat page, after Gemini in Chrome's: the decorative wave's strongest band, turned upside down
-   and shrunk to 16 by 8 pixels so it spreads into a soft pale field, fills the lower 65% and fades in from the middle,
-   under the quick start and the composer; a warm terracotta glow at the bottom of the navy field in dark. */
+/* The panel's new-chat page: a pure white field in both themes, so the quick start and the composer read calmly
+   on the same canvas as the conversation, with no pale-blue wash or image-backed wave. */
 .nb-start {
-  background:
-    linear-gradient(to bottom, #f6fcff 35%, rgb(246 252 255 / 0) 75%),
-    url('/brand/panel-wave.png') center bottom / 100% 65% no-repeat,
-    #f6fcff;
+  background: rgb(var(--nb-canvas));
 }
 .dark .nb-start {
-  background: radial-gradient(120% 45% at 30% 100%, rgb(193 95 60 / 0.25), transparent 70%), rgb(var(--nb-canvas));
+  background: rgb(var(--nb-canvas));
 }
 
-/* The settings page's field: the plain canvas in light, as under the panel's conversation, so the forms read calmly
-   and the page matches the panel; a navy gradient in dark. */
+/* The settings page's field: the plain white canvas in both themes, as under the panel's conversation, so the
+   forms read calmly and the page matches the panel. */
 .dark .nb-field {
-  background: linear-gradient(140deg, #0b1730 0%, #0c1626 40%, #0a1220 70%, #0f1c34 100%) fixed;
+  background: rgb(var(--nb-canvas));
 }
 
 /* Thin, quiet scrollbars in the narrow panel. */
