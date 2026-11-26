@@ -114,7 +114,7 @@ Each task's verification gate was run before the commit:
 
 **1. Single code commit instead of one commit per task**
 - **Found during:** Task 3 verification design.
-- **Issue:** Task 3's `AUDIT_GATE_OK` reconstructs the expected stylesheet from `git show HEAD:src/ui/index.css` and asserts that HEAD still contains exactly two `--nb-muted: 68 62 56;` declarations. Committing the edit during Task 1 would change HEAD and make that gate fail with "HEAD muted baseline unexpected".
+- **Issue:** Task 3's `AUDIT_GATE_OK` reconstructs the expected stylesheet from the committed baseline version of `src/ui/index.css` and asserts that this baseline still contains exactly two `--nb-muted: 68 62 56;` declarations. Committing the edit during Task 1 would change that baseline and make the gate fail with "HEAD muted baseline unexpected".
 - **Fix:** All three gates were executed against the working-tree change while HEAD stayed at the planner's baseline (`695909f`); the single substantive edit was then committed as `4182313`. Tasks 2 and 3 were pure audits with no file edits, so there was nothing further to commit atomically.
 - **Impact:** No file or behaviour difference from the plan; only commit granularity differs. The orchestrator's "commit per task" instruction could not be combined with the plan's mandated HEAD-baseline gate.
 
