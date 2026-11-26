@@ -1,7 +1,7 @@
 # Phase 4: Agent Integration - Context
 
 **Gathered:** 2026-10-31
-**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset, colour theme, all-white and warm-gray canvas decisions added)
+**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset, colour theme, all-white and warm-gray canvas decisions added); 2026-11-27 (low-contrast text fix decisions added)
 **Status:** Ready for planning
 
 <domain>
@@ -19,7 +19,9 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 
 **Added scope (2026-11-26, warm-gray canvas):** Replace the pure-white canvas with **#B1ADA1** across the whole UI in both themes — canvas, page background and cards/surfaces — keeping dark text, terracotta brand accent and Claude.ai-like feel. This supersedes D-25's `#FFFFFF` background decision; D-26's white background rules become #B1ADA1.
 
-**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing the logo artwork files, deleting brand image files.
+**Added scope (2026-11-27, low-contrast text fix):** The user's screenshot of Settings → Providers shows labels, model chips, "Details", helper text and the "Model name" placeholder fading into the warm-gray canvas. Fix secondary text so it reads clearly on #B1ADA1. The user explicitly scoped this to contrast only — "missing Claude Code features" are to be reported as an analysis, NOT implemented here.
+
+**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing the logo artwork files, deleting brand image files, adding new Claude-Code-like features.
 
 </domain>
 
@@ -74,6 +76,13 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 - **D-31:** Contrast on the darker canvas requires derived shades (measured): `--nb-muted` becomes **#443E38** (68 62 56, 4.700:1); `--nb-link` becomes **#6E2E17** (110 46 23, 4.531:1) in both themes; `--nb-border` becomes **#5F5B53** (95 91 83, 3.012:1) so borders remain visible against the same-coloured canvas. Brand accent `--nb-accent` stays **#C15F3C** (193 95 60) for fills/focus only — on #B1ADA1 it measures 1.884:1 and must NOT be used as text. Use `--nb-accent-strong` #A8492D (168 73 45) only behind white text; the darker #5E2711 is available if a text shade is needed. Keep `--nb-auto` amber. — **Reversibility:** reversible
 - **D-32:** The five background rules from D-26 (`.nb-wave`, `.dark .nb-wave`, `.nb-start`, `.dark .nb-start`, `.dark .nb-field`) resolve to `background: rgb(var(--nb-canvas));` — now #B1ADA1. No image backgrounds or blue/navy/white gradients. Brand image FILES stay byte-identical per D-27. — **Reversibility:** reversible
 - **D-33:** Keep the Claude.ai-like feel: system sans UI font, serif answers, warm gray canvas, dark text, terracotta accent. No logo or asset edits, no new dependency, no file/folder rename, no version bump, no `dist/**` hand-edits. — **Reversibility:** reversible
+
+### Low-contrast text fix (2026-11-27)
+- **D-34:** This change is added to the existing Phase 4 as another new plan (add-on pattern); no new phase, prior plans untouched. — **Reversibility:** reversible
+- **D-35:** User chose "Muted → fg, placeholder thoda dark": raise secondary text contrast on the #B1ADA1 canvas. Change light `--nb-muted` from `68 62 56` (#443E38, 4.700:1) to **`56 51 45` (#38332D, 5.574:1)** — still clearly secondary against `--nb-fg` (#0F1B2D, 7.705:1) but comfortably legible. Apply the same change in `.dark` if its muted token is used on a light surface; otherwise keep dark as-is and state why. — **Reversibility:** reversible
+- **D-36:** Give placeholders a perceptible colour: add a global `input::placeholder, textarea::placeholder { color: rgb(var(--nb-muted)); opacity: 1; }` rule in `src/ui/index.css` (browser default placeholder grey is too faint on #B1ADA1). This covers the screenshot's "Model name" placeholder and every other input placeholder. — **Reversibility:** reversible
+- **D-37:** Do NOT switch every secondary string to full `--nb-fg` — the user rejected the "sab kuch fg" option; visual hierarchy must remain (muted is still lighter than primary text). Keep all other colour values, borders, accents and brand assets unchanged. — **Reversibility:** reversible
+- **D-38:** A written comparison of "what Claude Code has that this extension does not" may be delivered as a response/analysis only; **no feature implementation** is in scope (AGENTS.md out-of-scope list stands). — **Reversibility:** reversible
 
 ### Claude's Discretion
 - Exact casing of the package name (`webmarker-extensions` in kebab-case) and zip filename (`webmarker-extensions-<version>.zip`).
