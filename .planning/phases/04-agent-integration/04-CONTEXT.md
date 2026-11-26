@@ -1,7 +1,7 @@
 # Phase 4: Agent Integration - Context
 
 **Gathered:** 2026-10-31
-**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset decisions added)
+**Updated:** 2026-11-19 (rebrand decisions added); 2026-11-26 (logo/brand asset and colour theme decisions added)
 **Status:** Ready for planning
 
 <domain>
@@ -13,7 +13,9 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 
 **Added scope (2026-11-26):** Replace the extension's visual identity with the user-supplied **WebMaker logo**: toolbar/favicon icons and the UI's horizontal brand logo. Asset contents change; asset paths and filenames stay the same. This is a visual asset change, not a new capability.
 
-**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing decorative wave backgrounds.
+**Added scope (2026-11-26, colour theme):** Switch the extension UI to a Claude.ai-like palette: `#FFFFFF` background and `#C15F3C` terracotta accent (the user explicitly asked for "seminila like claude.ai"). The logo artwork is explicitly **not** part of this change.
+
+**Out of scope:** internal identifier renames (`nb.*` storage keys, `nb-*` CSS variables/classes, `nb-panel` port name, `nb.data` message name, `.nanobrowser` gitignore entry), filename or folder renames, code behaviour changes, version bump, adding new icon sizes to the manifest, changing decorative wave backgrounds, changing the logo artwork.
 
 </domain>
 
@@ -46,6 +48,14 @@ Phase 4 originally verifies end-to-end agent runs on a custom tool-calling model
 - **D-15:** Icon sizes get the **W mark only** (crop the stylized W from the source; the wordmark and tagline are unreadable at 32 px). Larger UI branding (`logo-horizontal.png`) keeps the **full lockup** — W mark + "WebMaker" wordmark + "We Build Your Web" tagline — so the brand is recognizable in the side panel/welcome/options. — **Reversibility:** reversible
 - **D-16:** Keep decorative background assets `public/brand/panel-wave.png` and `public/brand/wave.jpg` unchanged — they are gradients, not logos. — **Reversibility:** reversible
 - **D-17:** Keep the manifest icon sizes as-is: **32 and 128 only**. Do not add 16/48 entries or new PNG files. — **Reversibility:** reversible
+
+### Colour theme (2026-11-26)
+- **D-18:** The colour change is added to the existing Phase 4 as another new plan (same add-on pattern as D-05 and D-12); no new phase is created. Previously shipped plans stay untouched. — **Reversibility:** reversible
+- **D-19:** User's exact target colours: background **#FFFFFF** and accent **#C15F3C** ("seminila like claude.ai"). Apply at the theme-token level in `src/ui/index.css`: make the light canvas `#FFFFFF` (`--nb-canvas` currently `#FAFBFD`; `--nb-bg` is already `#FFFFFF`) and set the terracotta accent family from `#C15F3C` (RGB 193, 95, 60). — **Reversibility:** reversible
+- **D-20:** Recolour all blue-derived brand tokens so no old blue accent survives: `--nb-accent`, `--nb-accent-strong`, `--nb-link`, `--nb-sky` and `--nb-shadow` in light and dark, plus the `accent-color` for inputs and the selection highlight. Keep `--nb-auto` amber — it is a semantic "auto mode" colour, not a brand accent. Derive lighter/darker terracotta shades for contrast; text on the white canvas must meet WCAG AA. — **Reversibility:** reversible
+- **D-21:** Keep the existing dark-mode palette structure and the `color-scheme` switch; change only its accent-family tokens to terracotta so the theme remains coherent in dark mode. — **Reversibility:** reversible
+- **D-22:** Do **not** touch the logo artwork or brand images — the user explicitly chose "extension UI theme only". `public/icon-32.png`, `public/icon-128.png`, `public/brand/logo-horizontal.png`, `panel-wave.png` and `wave.jpg` stay byte-identical. — **Reversibility:** reversible
+- **D-23:** Use **#B1ADA1** (RGB 177, 173, 161) for borders and dividers — `--nb-border` in the light theme — as a soft warm gray matching the Claude.ai-like palette. Keep the dark theme's darker border token; do not use #B1ADA1 for text (insufficient contrast on white) or for surfaces. — **Reversibility:** reversible
 
 ### Claude's Discretion
 - Exact casing of the package name (`webmarker-extensions` in kebab-case) and zip filename (`webmarker-extensions-<version>.zip`).
@@ -81,6 +91,11 @@ None.
 - `src/options/AboutSection.tsx` — About card title and website row
 - `src/llm/providers.ts` — `X-Title` header and `HTTP-Referer` sent to providers
 - `src/ui/protocol.ts` — comment naming the product
+
+### Colour theme
+- `src/ui/index.css` — `:root` and `.dark` define all `--nb-*` RGB token triplets; light canvas/border/accent and dark accents change here
+- `tailwind.config.ts` — maps every `--nb-*` token to a Tailwind colour; no change expected unless a token is added
+- `src/ui/components.tsx`, `src/ui/mode-menu.tsx`, `src/ui/shortcuts.tsx` — representative consumers of the accent/border tokens; read to confirm no hardcoded blue remains
 
 ### Logo and brand assets
 - `C:/Users/shesh/Downloads/logo (1).png` — user-supplied source artwork (outside the repo; do not commit the source)
@@ -131,6 +146,7 @@ None.
 - Source logo: `C:/Users/shesh/Downloads/logo (1).png` — W mark + "WebMaker" + "We Build Your Web"; W mark for icons, full lockup for UI branding
 - The user's words: "pura jagah name change kr ke webmarker extensions krna hai" — interpreted as everywhere visible/documented, with internal identifiers deliberately excluded per D-07.
 - The user's words: "use this for logo of this extention" — the attached image is authoritative; no alternative artwork requested.
+- Colour palette from the user: `#FFFFFF` background, `#C15F3C` accent ("seminila like claude.ai"), `#B1ADA1` borders/dividers. Logo artwork explicitly excluded.
 
 </specifics>
 
@@ -146,4 +162,4 @@ None.
 
 ---
 *Phase: 04-agent-integration*
-*Context gathered: 2026-10-31; rebrand decisions added 2026-11-19; logo decisions added 2026-11-26*
+*Context gathered: 2026-10-31; rebrand decisions added 2026-11-19; logo and colour-theme decisions added 2026-11-26*
