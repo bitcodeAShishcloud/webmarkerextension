@@ -78,7 +78,7 @@ Plans:
   3. Context management degrades gracefully when usage comes back null (estimation)
   4. CORS-blocked endpoints surface a distinct status-0 error and document origin allowance
 
-**Plans**: 7/8 plans executed
+**Plans**: 8/8 plans complete
 
 Plans:
 **Wave 1**
@@ -88,7 +88,7 @@ Plans:
 - [x] 04-05-PLAN.md - Colour theme: white canvas, #C15F3C terracotta accent, #B1ADA1 borders, coherent dark mode
 - [x] 04-06-PLAN.md - All-white canvas in both themes: white tokens, dereferenced blue/navy backgrounds, byte-identical brand assets
 - [x] 04-07-PLAN.md - Warm-gray canvas in both themes: #B1ADA1 tokens, derived AA shades, accent-as-text removed, byte-identical brand assets
-- [ ] 04-08-PLAN.md - Low-contrast text fix: darker muted token and explicit placeholder colour on the warm-gray canvas
+- [x] 04-08-PLAN.md - Low-contrast text fix: darker muted token and explicit placeholder colour on the warm-gray canvas
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [x] 04-02-PLAN.md - Verification tests
@@ -100,4 +100,4 @@ Plans:
 | 1. Settings UI & Validation | 2/2 | Complete    | 2026-10-30 |
 | 2. Profile Wiring & Validation | 1/1 | Complete    | 2026-10-31 |
 | 3. Test Probe Robustness | 1/1 | Complete    | 2026-10-31 |
-| 4. Agent Integration | 7/8 | In Progress |  |
+| 4. Agent Integration | 8/8 | Complete    | 2026-11-27 |
