@@ -26,7 +26,7 @@ export function PrivacyCard() {
           onChange={on => void settingsStorage.set(s => ({ ...s, analyticsStats: on }))}
         />
       </SettingsRow>
-      <a className="self-start text-sm text-nb-accent underline" href={PRIVACY_URL} target="_blank" rel="noreferrer">
+      <a className="self-start text-sm text-nb-link underline" href={PRIVACY_URL} target="_blank" rel="noreferrer">
         {t('privacy.policy')}
       </a>
     </SettingsCard>

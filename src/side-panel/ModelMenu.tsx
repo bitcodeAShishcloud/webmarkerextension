@@ -149,7 +149,7 @@ export function ModelMenu({
                   if (!sameRef(model, m.ref)) onModel(m.ref);
                 }}>
                 <span className="min-w-0 flex-1 truncate text-nb-fg">{m.label}</span>
-                <CheckIcon size={14} className={sameRef(model, m.ref) ? 'text-nb-accent' : 'invisible'} />
+                <CheckIcon size={14} className={sameRef(model, m.ref) ? 'text-nb-link' : 'invisible'} />
               </button>
             ))}
           </div>

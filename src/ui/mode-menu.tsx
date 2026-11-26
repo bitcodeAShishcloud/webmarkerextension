@@ -112,7 +112,7 @@ export function ModeMenu({
                 <span className={`font-medium ${m.mode === 'auto' ? 'text-nb-auto' : 'text-nb-fg'}`}>{t(m.name)}</span>
                 <span className="text-nb-muted">{t(m.description)}</span>
               </span>
-              <CheckIcon size={large ? 16 : 14} className={m.mode === mode ? 'text-nb-accent' : 'invisible'} />
+              <CheckIcon size={large ? 16 : 14} className={m.mode === mode ? 'text-nb-link' : 'invisible'} />
             </button>
           ))}
         </div>

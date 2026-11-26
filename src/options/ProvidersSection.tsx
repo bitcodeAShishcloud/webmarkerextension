@@ -279,7 +279,7 @@ function ChoiceMenu({
                 onChoose(c.value);
               }}>
               <span className="flex-1">{c.label}</span>
-              <CheckIcon size={16} className={c.value === value ? 'text-nb-accent' : 'invisible'} />
+              <CheckIcon size={16} className={c.value === value ? 'text-nb-link' : 'invisible'} />
             </button>
           ))}
         </div>

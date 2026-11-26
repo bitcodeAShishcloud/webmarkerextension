@@ -65,8 +65,8 @@ h3 {
   @apply bg-nb-sky/30;
 }
 
-/* The decorative wave behind the welcome and microphone pages: a pure white field in both themes, with no
-   image-backed wave. */
+/* The decorative wave behind the welcome and microphone pages: a warm-gray #B1ADA1 field in both themes, with
+   no image-backed wave. */
 .nb-wave {
   background: rgb(var(--nb-canvas));
 }
@@ -74,8 +74,8 @@ h3 {
   background: rgb(var(--nb-canvas));
 }
 
-/* The panel's new-chat page: a pure white field in both themes, so the quick start and the composer read calmly
-   on the same canvas as the conversation, with no pale-blue wash or image-backed wave. */
+/* The panel's new-chat page: a warm-gray #B1ADA1 field in both themes, so the quick start and the composer read
+   calmly on the same canvas as the conversation, with no image-backed wave. */
 .nb-start {
   background: rgb(var(--nb-canvas));
 }
@@ -83,8 +83,8 @@ h3 {
   background: rgb(var(--nb-canvas));
 }
 
-/* The settings page's field: the plain white canvas in both themes, as under the panel's conversation, so the
-   forms read calmly and the page matches the panel. */
+/* The settings page's field: the warm-gray #B1ADA1 canvas in both themes, as under the panel's conversation,
+   so the forms read calmly and the page matches the panel. */
 .dark .nb-field {
   background: rgb(var(--nb-canvas));
 }
